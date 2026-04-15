@@ -9,15 +9,13 @@ import { useScroll, motion, useTransform } from "framer-motion";
 export default function MissionVision() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLHeadingElement>(null);
-  
+
   const text = "Committed to support healthy pregnancy — Organized interventions. Decisive outcomes.".split(" ");
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
-
     if (textRef.current && sectionRef.current) {
-      const words = textRef.current.querySelectorAll('.word');
-      
+      const words = textRef.current.querySelectorAll(".word");
       gsap.fromTo(
         words,
         { opacity: 0.1, y: 20 },
@@ -31,8 +29,8 @@ export default function MissionVision() {
             end: "bottom bottom",
             scrub: true,
             pin: ".sticky-content",
-            pinSpacing: false
-          }
+            pinSpacing: false,
+          },
         }
       );
     }
@@ -40,7 +38,7 @@ export default function MissionVision() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
   });
 
   const visionY = useTransform(scrollYProgress, [0, 1], [-200, 0]);
@@ -50,30 +48,33 @@ export default function MissionVision() {
   return (
     <section ref={sectionRef} className="h-[200vh] relative z-20">
       <div className="sticky-content sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
-        
-        {/* Background fluid is already handled globally, but we can darken this area */}
-        <div className="absolute inset-0 bg-navy/50 pointer-events-none" />
+        {/* Light surface tint overlay */}
+        <div className="absolute inset-0 bg-[var(--navy)]/40 pointer-events-none" />
 
         <motion.div style={{ y: visionY, opacity }} className="absolute top-[20%] text-center px-4">
           <span className="text-sm tracking-[0.3em] text-teal font-semibold uppercase mb-2 block">Vision</span>
-          <p className="text-softwhite/60 max-w-lg mx-auto text-sm md:text-base">
+          <p className="text-[var(--muted)] max-w-lg mx-auto text-sm md:text-base">
             To emerge as a pioneering force in unifying sophisticated medical treatments with groundbreaking digital innovation.
           </p>
         </motion.div>
 
-        <h2 ref={textRef} className="text-3xl md:text-5xl lg:text-7xl font-display font-medium text-center max-w-5xl px-8 leading-tight text-white mix-blend-difference z-10">
+        <h2
+          ref={textRef}
+          className="text-3xl md:text-5xl lg:text-7xl font-display font-medium text-center max-w-5xl px-8 leading-tight text-foreground z-10"
+        >
           {text.map((word, i) => (
-            <span key={i} className="word inline-block mr-[0.2em]">{word}</span>
+            <span key={i} className="word inline-block mr-[0.2em]">
+              {word}
+            </span>
           ))}
         </h2>
 
         <motion.div style={{ y: missionY, opacity }} className="absolute bottom-[20%] text-center px-4">
           <span className="text-sm tracking-[0.3em] text-electric font-semibold uppercase mb-2 block">Mission</span>
-          <p className="text-softwhite/60 max-w-lg mx-auto text-sm md:text-base">
+          <p className="text-[var(--muted)] max-w-lg mx-auto text-sm md:text-base">
             Empowering women&apos;s health through precise pharmacology, while engineering reliable, high-performance web ecosystems.
           </p>
         </motion.div>
-        
       </div>
     </section>
   );

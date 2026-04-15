@@ -12,19 +12,20 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        navy: "var(--navy)", // used as dark variant in specific components
+        navy: "var(--navy)",
         surface: "var(--surface)",
-        electric: "#2BB2C2", // Tech cyan
-        indigo: "#322970", // Tech dark indigo
-        teal: "#5BBAB5", // Pharma teal
-        purple: "#5E51A2", // Pharma purple
-        pink: "#E81B62", // Pharma pink
-        gold: "#FDB813", // Pharma yellow
+        electric: "#2BB2C2",
+        indigo: "#322970",
+        teal: "#5BBAB5",
+        purple: "#5E51A2",
+        pink: "#E81B62",
+        gold: "#FDB813",
         softwhite: "#F8FAFC",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'fluid-bg': 'radial-gradient(circle at 50% 50%, #0A0B1A 0%, #05050A 100%)',
+        // Light version — soft white-to-slate radial
+        'fluid-bg': 'radial-gradient(circle at 50% 50%, #f8fafc 0%, #e2e8f0 100%)',
         'tech-gradient': 'linear-gradient(135deg, #2BB2C2 0%, #322970 100%)',
         'pharma-gradient': 'linear-gradient(135deg, #5E51A2 0%, #E81B62 50%, #FDB813 100%)',
       },

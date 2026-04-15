@@ -6,9 +6,13 @@
   :root {
     --background: #FFFFFF;
     --foreground: #0A0B1A;
-    --navy: #e2e8f0; /* Map navy to light surface in light mode if still used explicitly */
+    --navy: #e2e8f0;
     --surface: #f8fafc;
+    --card: #ffffff;
+    --card-border: rgba(0, 0, 0, 0.08);
     --border: rgba(0, 0, 0, 0.1);
+    --muted: #64748b;
+    --muted-bg: rgba(0, 0, 0, 0.04);
   }
 
   .dark {
@@ -16,7 +20,11 @@
     --foreground: #F8FAFC;
     --navy: #0A0B1A;
     --surface: #111428;
+    --card: #111428;
+    --card-border: rgba(255, 255, 255, 0.1);
     --border: rgba(255, 255, 255, 0.1);
+    --muted: #94a3b8;
+    --muted-bg: rgba(255, 255, 255, 0.05);
   }
 }
 
