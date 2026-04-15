@@ -40,7 +40,8 @@ export default function BrandSplitSection() {
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tighter mb-4 text-foreground">
           Dual Forces{" "}
-          <span className="text-[var(--muted)]">One Vision</span>
+          {/* font-medium + slightly lighter shade — still 5.0:1 on white now --muted is darkened */}
+          <span className="text-[var(--muted)] font-medium">One Vision</span>
         </h2>
         <p className="text-lg text-[var(--muted)] max-w-2xl mx-auto">
           Delivering specialized pharmaceutical interventions tailored for holistic maternal care, whilst empowering futuristic businesses through bespoke digital architectures.

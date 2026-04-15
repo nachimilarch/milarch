@@ -7,11 +7,12 @@
     --background: #FFFFFF;
     --foreground: #0A0B1A;
     --navy: #e2e8f0;
-    --surface: #f8fafc;
+    --surface: #f1f5f9;
     --card: #ffffff;
     --card-border: rgba(0, 0, 0, 0.08);
-    --border: rgba(0, 0, 0, 0.1);
-    --muted: #64748b;
+    --border: rgba(0, 0, 0, 0.12);
+    /* slate-600: 7.0:1 on white — WCAG AA for all text sizes */
+    --muted: #475569;
     --muted-bg: rgba(0, 0, 0, 0.04);
   }
 

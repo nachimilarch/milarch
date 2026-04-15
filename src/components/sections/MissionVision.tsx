@@ -18,7 +18,8 @@ export default function MissionVision() {
       const words = textRef.current.querySelectorAll(".word");
       gsap.fromTo(
         words,
-        { opacity: 0.1, y: 20 },
+        // Start at 0.3 opacity so words are always legible on white bg (0.1 was near-invisible)
+        { opacity: 0.3, y: 20 },
         {
           opacity: 1,
           y: 0,
@@ -47,9 +48,8 @@ export default function MissionVision() {
 
   return (
     <section ref={sectionRef} className="h-[200vh] relative z-20">
-      <div className="sticky-content sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
-        {/* Light surface tint overlay */}
-        <div className="absolute inset-0 bg-[var(--navy)]/40 pointer-events-none" />
+      <div className="sticky-content sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden bg-[var(--surface)]">
+        {/* No dark overlay — light surface bg provides the section separation */}
 
         <motion.div style={{ y: visionY, opacity }} className="absolute top-[20%] text-center px-4">
           <span className="text-sm tracking-[0.3em] text-teal font-semibold uppercase mb-2 block">Vision</span>
@@ -60,7 +60,7 @@ export default function MissionVision() {
 
         <h2
           ref={textRef}
-          className="text-3xl md:text-5xl lg:text-7xl font-display font-medium text-center max-w-5xl px-8 leading-tight text-foreground z-10"
+          className="text-3xl md:text-5xl lg:text-7xl font-display font-bold text-center max-w-5xl px-8 leading-tight text-foreground z-10"
         >
           {text.map((word, i) => (
             <span key={i} className="word inline-block mr-[0.2em]">
