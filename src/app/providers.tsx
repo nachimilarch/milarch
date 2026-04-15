@@ -7,5 +7,10 @@ export function ThemeProvider({
 }: {
   children: React.ReactNode
 }) {
-  return <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem>{children}</NextThemesProvider>
+  // defaultTheme: "light" — dark theme will be added later as a toggle
+  return (
+    <NextThemesProvider attribute="class" defaultTheme="light" enableSystem={false}>
+      {children}
+    </NextThemesProvider>
+  )
 }

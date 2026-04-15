@@ -8,109 +8,105 @@ import { useScroll, motion, useTransform } from "framer-motion";
 
 export default function MissionVision() {
   const sectionRef = useRef<HTMLElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
+  const textRef    = useRef<HTMLHeadingElement>(null);
 
   const text = "Committed to support healthy pregnancy \u2014 Organized interventions. Decisive outcomes.".split(" ");
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
-
-    if (!textRef.current || !sectionRef.current || !stickyRef.current) return;
+    if (!textRef.current || !sectionRef.current) return;
 
     const words = textRef.current.querySelectorAll(".word");
 
-    // Pin the sticky div for the full 200vh scroll budget
-    ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      pin: stickyRef.current,   // pin by ref, NOT class string
-      pinSpacing: false,         // section already has the 200vh height budget
-    });
-
-    // Word reveal — GSAP owns opacity only, no y-transform (avoids Framer Motion conflict)
+    // Pure scrub — NO pin here; CSS `sticky` handles the viewport lock.
+    // GSAP only drives word opacity relative to the section's 200vh scroll budget.
     gsap.fromTo(
       words,
-      { opacity: 0.15 },
+      { opacity: 0.12 },
       {
         opacity: 1,
-        stagger: 0.15,
+        stagger: 0.1,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1,
+          scrub: 1.5,
         },
       }
     );
   }, { scope: sectionRef });
 
-  // Framer Motion drives Vision/Mission slide-in panels ONLY — no opacity on wrapper
+  // Framer Motion: Vision/Mission panels slide in independently
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  const visionY    = useTransform(scrollYProgress, [0, 0.4], [-80, 0]);
-  const visionOp   = useTransform(scrollYProgress, [0, 0.25], [0, 1]);
-  const missionY   = useTransform(scrollYProgress, [0.6, 1], [80, 0]);
-  const missionOp  = useTransform(scrollYProgress, [0.7, 1], [0, 1]);
+  const visionY   = useTransform(scrollYProgress, [0, 0.35],  [-60, 0]);
+  const visionOp  = useTransform(scrollYProgress, [0, 0.3],   [0, 1]);
+  const missionY  = useTransform(scrollYProgress, [0.65, 1],  [60, 0]);
+  const missionOp = useTransform(scrollYProgress, [0.65, 0.9],[0, 1]);
 
   return (
     <section
       ref={sectionRef}
       className="h-[200vh] relative z-20"
     >
-      {/* Sticky panel — ref-pinned by GSAP, always full-screen, no overflow-hidden */}
-      <div
-        ref={stickyRef}
-        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-[var(--surface)]"
-      >
-        {/* Top accent line */}
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-teal/40 to-transparent" />
+      {/*
+        Pure CSS sticky — no GSAP pin at all.
+        CSS sticky is immune to Lenis scroll proxy issues.
+        The 200vh on the parent gives the full scroll budget.
+      */}
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-[var(--surface)]">
 
-        {/* VISION panel — slides in from top */}
+        {/* Top accent line */}
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-teal/50 to-transparent" />
+
+        {/* VISION — slides in from top */}
         <motion.div
           style={{ y: visionY, opacity: visionOp }}
-          className="absolute top-[14%] text-center px-4 w-full max-w-xl mx-auto"
+          className="absolute top-[13%] left-0 right-0 text-center px-6"
         >
-          <span className="text-xs tracking-[0.35em] text-teal font-bold uppercase mb-3 block">
+          <span className="text-xs tracking-[0.4em] text-teal font-bold uppercase mb-3 block">
             Vision
           </span>
-          <p className="text-[var(--muted)] text-sm md:text-base leading-relaxed">
+          <p className="text-[var(--muted)] text-sm md:text-base leading-relaxed max-w-lg mx-auto">
             To emerge as a pioneering force in unifying sophisticated medical treatments with groundbreaking digital innovation.
           </p>
         </motion.div>
 
-        {/* Central word-reveal heading — GSAP drives word opacity via scrub */}
+        {/* Central word-reveal — GSAP scrubs each word's opacity */}
         <h2
           ref={textRef}
           className="relative z-10 text-3xl md:text-5xl lg:text-6xl font-display font-bold text-center max-w-4xl px-8 leading-snug text-foreground"
         >
           {text.map((word, i) => (
-            <span key={i} className="word inline-block mr-[0.25em] last:mr-0">
+            <span
+              key={i}
+              className="word inline-block"
+              style={{ marginRight: "0.28em" }}
+            >
               {word}
             </span>
           ))}
         </h2>
 
-        {/* MISSION panel — slides in from bottom */}
+        {/* MISSION — slides in from bottom */}
         <motion.div
           style={{ y: missionY, opacity: missionOp }}
-          className="absolute bottom-[14%] text-center px-4 w-full max-w-xl mx-auto"
+          className="absolute bottom-[13%] left-0 right-0 text-center px-6"
         >
-          <span className="text-xs tracking-[0.35em] text-electric font-bold uppercase mb-3 block">
+          <span className="text-xs tracking-[0.4em] text-electric font-bold uppercase mb-3 block">
             Mission
           </span>
-          <p className="text-[var(--muted)] text-sm md:text-base leading-relaxed">
+          <p className="text-[var(--muted)] text-sm md:text-base leading-relaxed max-w-lg mx-auto">
             Empowering women&apos;s health through precise pharmacology, while engineering reliable, high-performance web ecosystems.
           </p>
         </motion.div>
 
         {/* Bottom accent line */}
-        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-electric/40 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-electric/50 to-transparent" />
       </div>
     </section>
   );
