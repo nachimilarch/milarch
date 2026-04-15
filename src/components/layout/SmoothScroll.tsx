@@ -19,13 +19,12 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       touchMultiplier: 2,
     });
 
-    // Lenis v2 correct integration:
-    // Drive Lenis from GSAP ticker so both run on the same frame loop.
-    // Then notify ScrollTrigger of the new scroll position every frame.
+    // gsap.ticker time is in SECONDS — lenis.raf() needs MILLISECONDS
     function onRaf(time: number) {
-      lenis.raf(time);
+      lenis.raf(time * 1000);
       ScrollTrigger.update();
     }
+
     gsap.ticker.add(onRaf);
     gsap.ticker.lagSmoothing(0);
 
