@@ -19,42 +19,19 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       touchMultiplier: 2,
     });
 
-    // ─── Critical: tell GSAP ScrollTrigger to read scroll position from Lenis ───
-    // Without this, GSAP pins/scrubs fire at wrong scroll offsets because
-    // Lenis intercepts native scroll events and GSAP reads stale window.scrollY.
-    ScrollTrigger.scrollerProxy(document.documentElement, {
-      scrollTop(value) {
-        if (arguments.length && value !== undefined) {
-          lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis.scroll;
-      },
-      getBoundingClientRect() {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-    });
-
-    // Sync Lenis scroll events → ScrollTrigger position updates
-    lenis.on("scroll", () => ScrollTrigger.update());
-
-    // Drive Lenis via GSAP ticker for frame-perfect sync
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
+    // Lenis v2 correct integration:
+    // Drive Lenis from GSAP ticker so both run on the same frame loop.
+    // Then notify ScrollTrigger of the new scroll position every frame.
+    function onRaf(time: number) {
+      lenis.raf(time);
+      ScrollTrigger.update();
+    }
+    gsap.ticker.add(onRaf);
     gsap.ticker.lagSmoothing(0);
 
-    // Refresh ScrollTrigger after proxy is set
-    ScrollTrigger.refresh();
-
     return () => {
+      gsap.ticker.remove(onRaf);
       lenis.destroy();
-      ScrollTrigger.scrollerProxy(document.documentElement, undefined as never);
-      ScrollTrigger.refresh();
     };
   }, []);
 
