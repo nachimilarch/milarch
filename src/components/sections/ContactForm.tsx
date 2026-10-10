@@ -2,10 +2,25 @@
 
 import { useState } from "react";
 
-const FIELD =
-  "w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3.5 text-foreground placeholder:text-[var(--muted-foreground)] focus:border-purple focus:outline-none focus:ring-4 focus:ring-[#5B55A5]/10";
+const LIGHT = {
+  field:
+    "w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3.5 text-foreground placeholder:text-[var(--muted-foreground)] focus:border-purple focus:outline-none focus:ring-4 focus:ring-[#5B55A5]/10",
+  form: "card grid gap-5 p-6 shadow-md md:p-8",
+  label: "grid gap-2 text-sm font-medium text-foreground",
+  button: "btn-primary w-full disabled:opacity-60",
+};
 
-export default function ContactForm() {
+const DARK = {
+  field:
+    "w-full rounded-2xl border border-white/10 bg-[#0A0918] px-4 py-3.5 text-white placeholder:text-white/35 focus:border-[#2BD3D8] focus:outline-none focus:ring-4 focus:ring-[#2BD3D8]/15",
+  form: "tech-card grid gap-5 p-6 md:p-8",
+  label: "grid gap-2 text-sm font-medium text-white",
+  button: "tech-btn w-full !py-3.5 disabled:opacity-60",
+};
+
+export default function ContactForm({ dark = false }: { dark?: boolean }) {
+  const ui = dark ? DARK : LIGHT;
+  const FIELD = ui.field;
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
@@ -27,22 +42,22 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card grid gap-5 p-6 shadow-md md:p-8">
+    <form onSubmit={handleSubmit} className={ui.form}>
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="grid gap-2 text-sm font-medium text-foreground">
+        <label className={ui.label}>
           Name
           <input type="text" required autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={FIELD} placeholder="Your name" />
         </label>
-        <label className="grid gap-2 text-sm font-medium text-foreground">
+        <label className={ui.label}>
           Email
           <input type="email" required autoComplete="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={FIELD} placeholder="you@example.com" />
         </label>
       </div>
-      <label className="grid gap-2 text-sm font-medium text-foreground">
+      <label className={ui.label}>
         Message
         <textarea rows={5} required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={`${FIELD} resize-none`} placeholder="How can we help?" />
       </label>
-      <button type="submit" disabled={status === "sending"} className="btn-primary w-full disabled:opacity-60">
+      <button type="submit" disabled={status === "sending"} className={ui.button}>
         {status === "sending" ? "Sending…" : status === "sent" ? "Message sent ✓" : "Send message"}
       </button>
       {status === "error" && (

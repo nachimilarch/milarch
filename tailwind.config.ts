@@ -69,6 +69,8 @@ const config: Config = {
       fontFamily: {
         sans:    ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "Georgia", "serif"],
+        tech:    ["var(--font-tech)", "system-ui", "sans-serif"],
+        mono:    ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       maxWidth: {
         site: "76rem",

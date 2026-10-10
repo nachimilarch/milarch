@@ -38,7 +38,7 @@ export default function Footer() {
         <FooterCol title="Company">
           <Link href="/#about" className="hover:text-white">About Milarch</Link>
           <Link href="/#doctors" className="hover:text-white">For doctors</Link>
-          <Link href="/#tech" className="hover:text-white">Milarch Tech</Link>
+          <Link href="/tech" className="hover:text-white">Milarch Tech</Link>
           <Link href="/#contact" className="hover:text-white">Contact</Link>
           <a href="mailto:info@milarch.in" className="hover:text-white">info@milarch.in</a>
         </FooterCol>

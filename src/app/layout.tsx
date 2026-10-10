@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope } from "next/font/google";
+import { Fraunces, JetBrains_Mono, Manrope, Sora } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./providers";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 
 const sans = Manrope({
@@ -17,6 +15,19 @@ const display = Fraunces({
   variable: "--font-display",
   display: "swap",
   axes: ["SOFT", "opsz"],
+});
+
+// Milarch Tech faces
+const techDisplay = Sora({
+  subsets: ["latin"],
+  variable: "--font-tech",
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -71,12 +82,10 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: revealScript }} />
       </head>
       <body
-        className={`${sans.variable} ${display.variable} font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        className={`${sans.variable} ${display.variable} ${techDisplay.variable} ${mono.variable} font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <ThemeProvider>
-          <Header />
-          <main className="flex-grow flex flex-col">{children}</main>
-          <Footer />
+          {children}
           <FloatingWhatsApp />
         </ThemeProvider>
       </body>

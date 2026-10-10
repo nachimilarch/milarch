@@ -10,7 +10,6 @@ const NAV_LINKS = [
   { href: "/#products", label: "Products" },
   { href: "/#doctors", label: "For doctors" },
   { href: "/#about", label: "About" },
-  { href: "/#tech", label: "Milarch Tech" },
   { href: "/#contact", label: "Contact" },
 ];
 
@@ -52,6 +51,12 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <Link
+            href="/tech"
+            className="ml-2 inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-white transition-colors hover:bg-indigo"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#2BD3D8]" /> Milarch Tech
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -83,7 +88,14 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
-              <Link href="/#products" onClick={closeMenu} className="btn-primary mt-4 w-full">
+              <Link
+                href="/tech"
+                onClick={closeMenu}
+                className="flex items-center gap-2 py-4 text-lg font-medium text-foreground"
+              >
+                <span className="h-2 w-2 rounded-full bg-[#2BB2C2]" /> Milarch Tech
+              </Link>
+              <Link href="/#products" onClick={closeMenu} className="btn-primary mt-2 w-full">
                 Shop products
               </Link>
             </nav>

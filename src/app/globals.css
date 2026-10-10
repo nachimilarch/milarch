@@ -209,3 +209,53 @@
 }
 .drift   { animation: drift 7s ease-in-out infinite; }
 .drift-2 { animation: drift 8s ease-in-out 1.5s infinite; }
+
+/* ── Milarch Tech (dark theme, /tech) ── */
+@layer components {
+  .tech-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[#2BD3D8] px-5 py-2.5 text-sm font-semibold text-[#0A0918] transition-all hover:bg-white;
+  }
+  .tech-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-white/40;
+  }
+  .tech-eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-[#2BD3D8];
+  }
+  .tech-card {
+    @apply rounded-3xl border border-white/[0.08] bg-[#121027];
+  }
+}
+
+.tech ::selection { background: #2BD3D855; }
+.tech :focus-visible { outline-color: #2BD3D8; }
+
+/* Signals travelling along the circuit traces */
+@keyframes pulse-run { to { stroke-dashoffset: -1000; } }
+.trace-pulse {
+  stroke-dasharray: 60 940;
+  animation: pulse-run 6s linear infinite;
+}
+.trace-pulse.d1 { animation-delay: -1.5s; }
+.trace-pulse.d2 { animation-delay: -3s; }
+.trace-pulse.d3 { animation-delay: -4.5s; }
+
+@keyframes blink { 50% { opacity: 0.35; } }
+.live-dot { animation: blink 2.4s ease-in-out infinite; }
+
+.tech-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Pharma brand ticker */
+@keyframes ticker { to { transform: translateX(-50%); } }
+.ticker { animation: ticker 40s linear infinite; }
+.ticker:hover { animation-play-state: paused; }
+
+/* Hero capsules breathe gently */
+@keyframes bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+.capsule-a { animation: bob 6s ease-in-out infinite; transform-box: fill-box; }
+.capsule-b { animation: bob 7s ease-in-out 1s infinite; transform-box: fill-box; }
+.capsule-c { animation: bob 5.5s ease-in-out 2s infinite; transform-box: fill-box; }
