@@ -65,10 +65,17 @@ export const viewport: Viewport = {
 const revealScript = `
 document.documentElement.classList.add('js');
 addEventListener('DOMContentLoaded',function(){
-  var els=document.querySelectorAll('.reveal,.mark-anim,.mark-stage');
-  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px'});
-  els.forEach(function(e){io.observe(e)});
+  var sel='.reveal,.mark-anim,.mark-stage';
+  var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px'}):null;
+  function watch(root){
+    var els=root.querySelectorAll?root.querySelectorAll(sel):[];
+    var list=root.matches&&root.matches(sel)?[root].concat([].slice.call(els)):[].slice.call(els);
+    list.forEach(function(e){if(e.classList.contains('in'))return;io?io.observe(e):e.classList.add('in');});
+  }
+  watch(document);
+  // Pages opened by client-side navigation (e.g. Pharma to Tech) add new
+  // blocks after load, so watch for them too.
+  new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1)watch(n);});});}).observe(document.body,{childList:true,subtree:true});
 });`;
 
 export default function RootLayout({
