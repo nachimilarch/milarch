@@ -65,9 +65,6 @@ function MarkStage() {
 
         <AnimatedMark className="absolute left-1/2 top-[13%] h-[76%] w-auto -translate-x-1/2" />
       </div>
-      <figcaption className="mt-2 text-center text-sm text-[var(--muted)]">
-        Our mark: a mother and child, formed into an M from capsules and tablets.
-      </figcaption>
     </figure>
   );
 }
