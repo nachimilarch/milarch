@@ -1,116 +1,133 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
-import { Pill } from "lucide-react";
-
-// NOTE: `text` is only used for the icon — NOT as text-on-white.
-// `accentText` is the darker accessible version used for labels.
-const products = [
-  {
-    name: "MYCOCIDE Vg™",
-    color: "from-[#5BBAB5] to-[#00B4D8]",
-    bg: "bg-teal/10",
-    iconText: "text-teal",
-    accentText: "text-teal",       // teal #5BBAB5: ~4.5:1 on white ✓ (large bold text)
-  },
-  {
-    name: "FETOGRO™",
-    color: "from-[#FDB813] to-[#e6a500]",
-    bg: "bg-amber-100",
-    iconText: "text-amber-600",    // amber-600 #d97706: ~4.5:1 on white ✓
-    accentText: "text-amber-700",  // amber-700 #b45309: ~6.1:1 on white ✓
-  },
-  {
-    name: "PCOMet M™",
-    color: "from-[#5E51A2] to-[#322970]",
-    bg: "bg-purple/10",
-    iconText: "text-purple",
-    accentText: "text-purple",     // purple #5E51A2: ~5.3:1 on white ✓
-  },
-  {
-    name: "BZeeVIT™",
-    color: "from-[#2BB2C2] to-[#5E51A2]",
-    bg: "bg-electric/10",
-    iconText: "text-electric",
-    accentText: "text-[#1a8a97]",  // darker electric: ~5.2:1 on white ✓
-  },
-  {
-    name: "SYMGUT™",
-    color: "from-[#FDB813] to-[#E81B62]",
-    bg: "bg-amber-100",
-    iconText: "text-amber-600",
-    accentText: "text-amber-700",
-  },
-  {
-    name: "CERVIVE™",
-    color: "from-[#E81B62] to-[#5E51A2]",
-    bg: "bg-pink/10",
-    iconText: "text-pink",
-    accentText: "text-pink",       // pink #E81B62: ~4.6:1 on white ✓
-  },
-];
+import { products } from "@/data/products";
 
 export default function PharmaShowcase() {
   return (
-    <section className="relative min-h-screen py-24 px-4 overflow-hidden z-20 flex flex-col items-center justify-center">
+    <section id="pharma" className="relative min-h-screen py-24 px-4 overflow-hidden z-20 flex flex-col items-center justify-center">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-teal/30 to-transparent" />
 
-      <div className="text-center mb-24 max-w-2xl relative z-10">
+      <div className="text-center mb-16 max-w-2xl relative z-10">
         <span className="text-teal font-mono tracking-widest text-sm uppercase mb-4 block">Product Lines</span>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground tracking-tighter mb-6">
-          Precision Pharma<br />For Women&apos;s Health
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold gradient-text-pharma tracking-tighter mb-6">
+          Milarch Pharma —<br />Women&apos;s Health Specialists
         </h2>
-        <p className="text-[var(--muted)]">
-          Explore our six core therapies engineered to navigate complex physiological milestones with unerring accuracy.
+        <p className="text-[var(--muted)] text-base leading-relaxed">
+          Dedicated to improving maternal and gynaecological outcomes through scientifically formulated pharmaceutical products.
         </p>
       </div>
 
-      <div className="relative w-full max-w-4xl aspect-square md:aspect-video flex items-center justify-center">
-        {/* Central orbit node */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full border border-teal/30 bg-teal/10 backdrop-blur-md flex items-center justify-center z-10 hidden md:flex">
-          <Pill className="text-teal w-12 h-12" />
-        </div>
-
-        {/* Orbit rings */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] md:w-[60%] md:h-[120%] rounded-[100%] border border-teal/20 rotate-45 hidden md:block" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] md:w-[80%] md:h-[100%] rounded-[100%] border border-foreground/8 -rotate-45 hidden md:block" />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-x-16 md:gap-y-24 relative z-20 w-full px-4">
-          {products.map((product, i) => (
-            <motion.div
-              key={product.name}
-              initial={{ opacity: 0, y: 100 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.1, duration: 0.8, ease: "easeOut" }}
-            >
-              <Link href={`/pharma/products/${product.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>
-                <motion.div
-                  className="bg-[var(--card)] border border-[var(--card-border)] p-8 rounded-3xl group cursor-pointer hover:border-[var(--border)] transition-all relative flex flex-col items-center text-center shadow-sm hover:shadow-lg"
-                  whileHover={{ y: -10, scale: 1.05 }}
-                >
-                  {/* Hover glow */}
-                  <div
-                    className={`absolute -inset-1 bg-gradient-to-b ${product.color} opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500 rounded-3xl`}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full px-4 relative z-10">
+        {products.map((product, i) => (
+          <motion.div
+            key={product.category}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ delay: i * 0.08, duration: 0.7, ease: "easeOut" }}
+            whileHover={{ y: -5 }}
+            style={{
+              ["--card-accent" as string]: product.accentColor,
+              backgroundImage: `linear-gradient(160deg, ${product.accentColor}1c 0%, ${product.accentColor}05 45%, transparent 75%)`,
+            } as CSSProperties}
+            className="accent-card glass rounded-2xl overflow-hidden flex flex-col transition-shadow duration-300 hover:shadow-lg"
+          >
+            <Link href={`/pharma/products/${product.slug}`} className="flex flex-col flex-1">
+              {/* Photo banner — falls back to a colored gradient with the category icon when no photo exists */}
+              <div className="relative h-36 w-full flex-shrink-0 overflow-hidden">
+                {product.image ? (
+                  <Image
+                    src={product.image}
+                    alt={product.brandName}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-contain p-4 bg-white"
                   />
-
-                  {/* Icon circle */}
-                  <div className={`w-16 h-16 rounded-full ${product.bg} flex items-center justify-center mb-6 relative z-10 transition-colors`}>
-                    <Pill className={`w-8 h-8 ${product.iconText}`} />
+                ) : (
+                  <div
+                    className="w-full h-full flex items-center justify-center"
+                    style={{ background: `linear-gradient(160deg, ${product.accentColor}30, ${product.accentEnd}15)` }}
+                  >
+                    <product.Icon className="w-12 h-12" style={{ color: product.accentColor }} />
                   </div>
+                )}
+              </div>
 
-                  {/* Product name — always foreground, always readable */}
-                  <h3 className="text-xl font-display font-bold text-foreground mb-2 relative z-10">{product.name}</h3>
+              {/* Gradient top bar */}
+              <div
+                className="h-[3px] w-full flex-shrink-0"
+                style={{ background: `linear-gradient(90deg, ${product.accentColor}, ${product.accentEnd})` }}
+              />
 
-                  {/* Accent label — uses per-product accessible colour */}
-                  <p className={`${product.accentText} text-sm font-semibold uppercase tracking-widest relative z-10`}>View Details →</p>
-                </motion.div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+              <div className="p-6 flex flex-col gap-4 flex-1">
+                {/* Icon circle + heading */}
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: `${product.accentColor}1A` }}
+                  >
+                    <product.Icon className="w-5 h-5" style={{ color: product.accentColor }} />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-display font-bold text-foreground leading-tight">
+                      {product.category}
+                    </h3>
+                    <span
+                      className="text-xs font-semibold uppercase tracking-widest"
+                      style={{ color: product.accentColor }}
+                    >
+                      {product.fullName}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Tag chips */}
+                <div className="flex flex-wrap gap-1.5">
+                  {product.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs px-2.5 py-1 rounded-full font-medium"
+                      style={{
+                        backgroundColor: `${product.accentColor}18`,
+                        color: product.accentColor,
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Indication */}
+                <p className="text-sm text-foreground leading-relaxed">{product.clinicalIndication}</p>
+
+                {/* Key benefit */}
+                <div className="mt-auto pt-3 border-t border-[var(--border)]">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)] mb-1">Key Benefit</p>
+                  <p className="text-xs text-[var(--muted)] leading-relaxed">{product.benefit}</p>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
       </div>
+
+      {/* Target Audience */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.5, duration: 0.7 }}
+        className="mt-16 max-w-2xl text-center z-10"
+      >
+        <p className="text-sm text-[var(--muted)] leading-relaxed border-t border-[var(--border)] pt-8">
+          <span className="font-semibold text-foreground">Target Audience:</span>{" "}
+          Our formulations are prescribed by gynaecologists, obstetricians, and general practitioners across Telangana and Andhra Pradesh.
+        </p>
+      </motion.div>
     </section>
   );
 }

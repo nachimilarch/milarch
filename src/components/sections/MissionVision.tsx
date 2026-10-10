@@ -9,7 +9,7 @@ export default function MissionVision() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef    = useRef<HTMLHeadingElement>(null);
 
-  const words = "Committed to support healthy pregnancy \u2014 Organized interventions. Decisive outcomes.".split(" ");
+  const words = "Committed to support healthy pregnancy — Organized interventions. Decisive outcomes.".split(" ");
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -17,7 +17,6 @@ export default function MissionVision() {
 
     const wordEls = textRef.current.querySelectorAll(".word");
 
-    // Only animate the word opacity — Vision/Mission are always visible
     gsap.fromTo(
       wordEls,
       { opacity: 0.12 },
@@ -27,8 +26,8 @@ export default function MissionVision() {
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom bottom",
+          start: "top 75%",
+          end: "center 30%",
           scrub: 1,
         },
       }
@@ -38,47 +37,48 @@ export default function MissionVision() {
   return (
     <section
       ref={sectionRef}
-      className="h-[200vh] relative z-20"
+      className="relative py-32 px-4 z-20"
     >
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-[var(--surface)]">
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-teal/50 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-electric/50 to-transparent" />
 
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-teal/50 to-transparent" />
-
-        {/* VISION — always visible, no animation */}
-        <div className="absolute top-[13%] left-0 right-0 text-center px-6">
-          <span className="text-xs tracking-[0.4em] text-teal font-bold uppercase mb-3 block">
-            Vision
-          </span>
-          <p className="text-[var(--muted)] text-sm md:text-base leading-relaxed max-w-lg mx-auto">
-            To emerge as a pioneering force in unifying sophisticated medical treatments with groundbreaking digital innovation.
-          </p>
+      <div className="max-w-5xl mx-auto flex flex-col gap-12">
+        {/* Central word-reveal heading */}
+        <div className="glass-strong rounded-3xl p-8 relative z-10">
+          <h2
+            ref={textRef}
+            className="font-display font-bold text-center text-[var(--primary)]"
+            style={{ fontSize: "clamp(1.5rem, 4vw, 3.5rem)", lineHeight: 1.35 }}
+          >
+            {words.map((word, i) => (
+              <span key={i}>
+                <span className="word" style={{ opacity: 0.12 }}>{word}</span>
+                {" "}
+              </span>
+            ))}
+          </h2>
         </div>
 
-        {/* Central word-reveal heading — GSAP scrubs each word opacity */}
-        <h2
-          ref={textRef}
-          className="relative z-10 font-display font-bold text-center max-w-4xl px-8 text-foreground"
-          style={{ fontSize: "clamp(1.5rem, 4vw, 3.5rem)", lineHeight: 1.35 }}
-        >
-          {words.map((word, i) => (
-            <span key={i}>
-              <span className="word" style={{ opacity: 0.12 }}>{word}</span>
-              {" "}
+        {/* Vision + Mission side-by-side — no absolute positioning */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="hover-lift glass-teal rounded-2xl p-6 text-center">
+            <span className="text-xs tracking-[0.4em] text-teal font-bold uppercase mb-3 block">
+              Vision
             </span>
-          ))}
-        </h2>
+            <p className="text-[var(--muted)] text-sm md:text-base leading-relaxed">
+              To emerge as a pioneering force in unifying sophisticated medical treatments with groundbreaking digital innovation.
+            </p>
+          </div>
 
-        {/* MISSION — always visible, no animation */}
-        <div className="absolute bottom-[13%] left-0 right-0 text-center px-6">
-          <span className="text-xs tracking-[0.4em] text-electric font-bold uppercase mb-3 block">
-            Mission
-          </span>
-          <p className="text-[var(--muted)] text-sm md:text-base leading-relaxed max-w-lg mx-auto">
-            Empowering women&apos;s health through precise pharmacology, while engineering reliable, high-performance web ecosystems.
-          </p>
+          <div className="hover-lift glass-electric rounded-2xl p-6 text-center">
+            <span className="text-xs tracking-[0.4em] text-electric font-bold uppercase mb-3 block">
+              Mission
+            </span>
+            <p className="text-[var(--muted)] text-sm md:text-base leading-relaxed">
+              Empowering women&apos;s health through precise pharmacology, while engineering reliable, high-performance digital ecosystems for the healthcare industry.
+            </p>
+          </div>
         </div>
-
-        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-electric/50 to-transparent" />
       </div>
     </section>
   );

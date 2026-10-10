@@ -6,8 +6,17 @@ import { motion } from "framer-motion";
 export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    setEnabled(isFinePointer);
+    document.documentElement.classList.toggle("custom-cursor-active", isFinePointer);
+    return () => document.documentElement.classList.remove("custom-cursor-active");
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
     const updateMousePosition = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -32,7 +41,9 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", updateMousePosition);
       window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <>
