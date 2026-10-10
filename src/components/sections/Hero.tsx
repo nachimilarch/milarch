@@ -41,7 +41,7 @@ export default function Hero() {
   );
 }
 
-/** The logo assembling itself on a soft stage, with three labels that explain what it depicts. */
+/** The logo assembling itself on a soft stage. */
 function MarkStage() {
   return (
     <figure className="mark-stage relative mx-auto w-full max-w-[26rem] sm:max-w-[32rem] lg:max-w-[38rem]">
@@ -64,27 +64,11 @@ function MarkStage() {
         </svg>
 
         <AnimatedMark className="absolute left-1/2 top-[13%] h-[76%] w-auto -translate-x-1/2" />
-
-        <Chip delay="1.4s" className="left-[2%] top-[14%]" colour="#E5195F" label="Mother" />
-        <Chip delay="2.6s" className="right-[0%] top-[30%]" colour="#FFC20E" label="Child" />
-        <Chip delay=".7s" className="bottom-[9%] left-[0%]" colour="#5EC4BA" label="Capsules form the M" />
       </div>
       <figcaption className="mt-2 text-center text-sm text-[var(--muted)]">
         Our mark: a mother and child, formed into an M from capsules and tablets.
       </figcaption>
     </figure>
-  );
-}
-
-function Chip({ label, colour, delay, className }: { label: string; colour: string; delay: string; className?: string }) {
-  return (
-    <span
-      className={`mark-chip absolute inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white/90 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-md backdrop-blur ${className ?? ""}`}
-      style={{ animationDelay: delay }}
-    >
-      <span className="h-2 w-2 rounded-full" style={{ background: colour }} />
-      {label}
-    </span>
   );
 }
 
