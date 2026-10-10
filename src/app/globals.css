@@ -210,52 +210,137 @@
 .drift   { animation: drift 7s ease-in-out infinite; }
 .drift-2 { animation: drift 8s ease-in-out 1.5s infinite; }
 
-/* ── Milarch Tech (dark theme, /tech) ── */
+/* ── Milarch Tech (light theme, /tech) ──
+   Built on the tech logo: circuit traces in a teal-to-indigo gradient. */
 @layer components {
   .tech-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[#2BD3D8] px-5 py-2.5 text-sm font-semibold text-[#0A0918] transition-all hover:bg-white;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#1FB5BE] to-[#3B3A9E] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_24px_-10px_rgba(59,58,158,0.6)] transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-12px_rgba(59,58,158,0.7)];
   }
   .tech-btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-white/40;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-[#D9DCEA] bg-white px-5 py-2.5 text-sm font-semibold text-[#0E1033] transition-colors hover:border-[#1FB5BE];
   }
   .tech-eyebrow {
-    @apply font-mono text-xs uppercase tracking-[0.2em] text-[#2BD3D8];
+    @apply inline-flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.2em] text-[#178C94];
   }
   .tech-card {
-    @apply rounded-3xl border border-white/[0.08] bg-[#121027];
+    @apply rounded-3xl border border-[#E3E6F0] bg-white;
+  }
+  .tech-grad-text {
+    @apply bg-gradient-to-r from-[#1FB5BE] to-[#3B3A9E] bg-clip-text text-transparent;
   }
 }
 
-.tech ::selection { background: #2BD3D855; }
-.tech :focus-visible { outline-color: #2BD3D8; }
+.tech ::selection { background: #1FB5BE40; }
+.tech :focus-visible { outline-color: #1FB5BE; }
 
-/* Signals travelling along the circuit traces */
-@keyframes pulse-run { to { stroke-dashoffset: -1000; } }
-.trace-pulse {
-  stroke-dasharray: 60 940;
-  animation: pulse-run 6s linear infinite;
+.tech-dots {
+  background-image: radial-gradient(#C9CEE0 1px, transparent 1px);
+  background-size: 22px 22px;
 }
-.trace-pulse.d1 { animation-delay: -1.5s; }
-.trace-pulse.d2 { animation-delay: -3s; }
-.trace-pulse.d3 { animation-delay: -4.5s; }
 
-@keyframes blink { 50% { opacity: 0.35; } }
+/* Traces that draw themselves when their .reveal block scrolls into view */
+.js .reveal .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.reveal.in .draw { stroke-dashoffset: 0; transition: stroke-dashoffset 1.8s cubic-bezier(.65,0,.35,1); }
+.reveal.in .draw.d1 { transition-delay: .3s; }
+.reveal.in .draw.d2 { transition-delay: .6s; }
+.reveal.in .draw.d3 { transition-delay: .9s; }
+.reveal.in .draw.d4 { transition-delay: 1.2s; }
+
+/* Signals travelling along traces (paths use pathLength=1000) */
+@keyframes pulse-run { to { stroke-dashoffset: -1000; } }
+.trace-pulse { stroke-dasharray: 70 930; animation: pulse-run 5s linear infinite; }
+.trace-pulse.p1 { animation-delay: -1.2s; }
+.trace-pulse.p2 { animation-delay: -2.5s; }
+.trace-pulse.p3 { animation-delay: -3.7s; }
+
+/* Pieces that pop in, one after another (delay set inline) */
+@keyframes pop-in { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
+.js .reveal:not(.in) .pop { opacity: 0; }
+.reveal.in .pop { animation: pop-in .55s cubic-bezier(.22,1,.36,1) both; }
+
+@keyframes grow-y { from { transform: scaleY(0); } to { transform: none; } }
+.js .reveal:not(.in) .grow { transform: scaleY(0); }
+.reveal.in .grow { animation: grow-y .9s cubic-bezier(.22,1,.36,1) both; transform-origin: 50% 100%; transform-box: fill-box; }
+
+@keyframes blink { 50% { opacity: .35; } }
 .live-dot { animation: blink 2.4s ease-in-out infinite; }
 
-.tech-grid {
-  background-image:
-    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-  background-size: 48px 48px;
+@keyframes node-ping { 0% { transform: scale(1); opacity: .5; } 100% { transform: scale(2.6); opacity: 0; } }
+.node-ping { animation: node-ping 2.4s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+
+/* LadderStep board: a candidate moves from Interview to Offer, on a loop */
+@keyframes move-card {
+  0%, 30% { transform: translateX(0); }
+  45%, 85% { transform: translateX(calc(100% + 2rem)); }
+  95%, 100% { transform: translateX(0); opacity: 1; }
+}
+.reveal.in .move-card { animation: move-card 7s cubic-bezier(.65,0,.35,1) 1.2s infinite; }
+
+@keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: .4; } 30% { transform: translateY(-3px); opacity: 1; } }
+.typing span { animation: typing 1.2s infinite; display: inline-block; }
+.typing span:nth-child(2) { animation-delay: .15s; }
+.typing span:nth-child(3) { animation-delay: .3s; }
+
+@keyframes float-card { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.float-card { animation: float-card 6s ease-in-out infinite; }
+.float-card.f2 { animation-delay: -1.5s; }
+.float-card.f3 { animation-delay: -3s; }
+.float-card.f4 { animation-delay: -4.5s; }
+
+/* ── Animated Milarch mark ──
+   Pieces start hidden only when JS is on and motion is allowed; .in (added
+   by the reveal script when the mark scrolls into view) plays the assembly. */
+.mark-anim g { transform-box: fill-box; }
+.m-legl, .m-legr, .m-body, .m-baby { transform-origin: 50% 100%; }
+.m-head, .m-bhead, .m-head-idle, .m-bhead-idle { transform-origin: 50% 50%; }
+.m-bhead-idle { transform-origin: 30% 100%; }
+.m-tail { transform-origin: 100% 40%; }
+
+@keyframes m-rise   { from { opacity: 0; transform: translateY(80px) scaleY(.4); } 70% { opacity: 1; transform: translateY(-6px) scaleY(1.03); } to { opacity: 1; transform: none; } }
+@keyframes m-grow   { from { opacity: 0; transform: scaleY(0); } 65% { opacity: 1; transform: scaleY(1.05); } to { opacity: 1; transform: none; } }
+@keyframes m-roll   { from { opacity: 0; transform: translate(-90px, -150px) rotate(-300deg); } 60% { opacity: 1; transform: translate(0, 6px) rotate(8deg); } 80% { transform: translate(0, -4px) rotate(-3deg); } to { opacity: 1; transform: none; } }
+@keyframes m-tail   { from { opacity: 0; transform: scale(0) rotate(40deg); } 60% { opacity: 1; transform: scale(1.1) rotate(-14deg); } 80% { transform: rotate(6deg); } to { opacity: 1; transform: none; } }
+@keyframes m-top    { from { opacity: 0; transform: translateY(-90px); } 75% { opacity: 1; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@keyframes m-bot    { from { opacity: 0; transform: translateY(90px); } 75% { opacity: 1; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+@keyframes m-fade   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes m-lean   { 0% { transform: rotate(14deg); } 55% { transform: rotate(-3deg); } 80% { transform: rotate(1deg); } to { transform: none; } }
+@keyframes m-pop    { from { opacity: 0; transform: translateY(-40px) scale(0) rotate(180deg); } 60% { opacity: 1; transform: translateY(4px) scale(1.15) rotate(-10deg); } to { opacity: 1; transform: none; } }
+@keyframes m-nod    { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-6deg); } }
+@keyframes m-tilt   { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(4deg); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .mark-anim:not(.in) g[class^="m-"],
+  .js .mark-anim:not(.in) .m-seam { opacity: 0; }
+
+  .mark-anim.in .m-legl   { animation: m-rise .8s cubic-bezier(.22,1,.36,1) .05s both; }
+  .mark-anim.in .m-legr   { animation: m-rise .8s cubic-bezier(.22,1,.36,1) .2s both; }
+  .mark-anim.in .m-body   { animation: m-grow .8s cubic-bezier(.22,1,.36,1) .4s both; }
+  .mark-anim.in .m-head   { animation: m-roll 1s cubic-bezier(.22,1,.36,1) .85s both; }
+  .mark-anim.in .m-tail   { animation: m-tail .7s ease-out 1.55s both; }
+  .mark-anim.in .m-cap-top{ animation: m-top .65s cubic-bezier(.22,1,.36,1) 1.25s both; }
+  .mark-anim.in .m-cap-bot{ animation: m-bot .65s cubic-bezier(.22,1,.36,1) 1.25s both; }
+  .mark-anim.in .m-seam   { animation: m-fade .2s linear 1.8s both; }
+  .mark-anim.in .m-baby   { animation: m-lean 1s cubic-bezier(.34,1.4,.64,1) 1.75s both; }
+  .mark-anim.in .m-bhead  { animation: m-pop .7s cubic-bezier(.34,1.56,.64,1) 2.25s both; }
+  .mark-anim.in .m-bhead-idle { animation: m-nod 4.5s ease-in-out 3.2s infinite; }
+  .mark-anim.in .m-head-idle  { animation: m-tilt 6s ease-in-out 3.4s infinite; }
 }
 
-/* Pharma brand ticker */
-@keyframes ticker { to { transform: translateX(-50%); } }
-.ticker { animation: ticker 40s linear infinite; }
-.ticker:hover { animation-play-state: paused; }
+/* Hero stage around the mark */
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.orbit { animation: spin-slow 60s linear infinite; transform-origin: 50% 50%; }
+.orbit-rev { animation: spin-slow 90s linear infinite reverse; transform-origin: 50% 50%; }
+@keyframes float-y { 0%,100% { transform: translateY(0) rotate(var(--r,0deg)); } 50% { transform: translateY(-12px) rotate(var(--r,0deg)); } }
+.float-pill { animation: float-y 7s ease-in-out infinite; }
+@keyframes chip-in { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: none; } }
+.js .mark-stage:not(.in) .mark-chip { opacity: 0; }
+.mark-stage.in .mark-chip { animation: chip-in .5s cubic-bezier(.22,1,.36,1) both; }
 
-/* Hero capsules breathe gently */
-@keyframes bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
-.capsule-a { animation: bob 6s ease-in-out infinite; transform-box: fill-box; }
-.capsule-b { animation: bob 7s ease-in-out 1s infinite; transform-box: fill-box; }
-.capsule-c { animation: bob 5.5s ease-in-out 2s infinite; transform-box: fill-box; }
+/* Signals start once the traces have drawn */
+.js .reveal .trace-pulse { opacity: 0; }
+.reveal.in .trace-pulse { opacity: 1; transition: opacity .5s ease 2s; }
+
+@keyframes grow-x { from { transform: scaleX(0); } to { transform: none; } }
+.grow-x { transform-origin: 0 50%; }
+.js .reveal:not(.in) .grow-x { transform: scaleX(0); }
+.reveal.in .grow-x { animation: grow-x 1s cubic-bezier(.22,1,.36,1) both; }

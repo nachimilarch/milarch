@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function TechLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="tech flex min-h-screen flex-col bg-[#0A0918] text-[#ECEBFA]">
+    <div className="tech flex min-h-screen flex-col bg-[#F7F8FC] text-[#0E1033]">
       <TechHeader />
       <main className="flex flex-grow flex-col">{children}</main>
       <TechFooter />

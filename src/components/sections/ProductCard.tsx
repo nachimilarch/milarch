@@ -12,45 +12,63 @@ export function RxBadge({ product }: { product: Product }) {
   );
 }
 
-export function FeaturedProductCard({ product }: { product: Product }) {
+export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/pharma/products/${product.slug}`}
-      className="reveal card group flex flex-col overflow-hidden p-3 transition-shadow hover:shadow-lg"
+      className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-24px_rgba(42,36,99,0.35)]"
+      style={{ ["--card-accent" as string]: product.accentColor }}
     >
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem]" style={{ background: product.accentTint }}>
-        <span
-          className="absolute left-4 top-4 z-10 chip bg-white/90 backdrop-blur"
-          style={{ color: product.accentColor }}
-        >
+      <div className="relative aspect-[5/4] overflow-hidden" style={{ background: product.accentTint }}>
+        <div
+          className="absolute -bottom-16 -right-10 h-56 w-56 rounded-full opacity-[0.12] transition-transform duration-700 group-hover:scale-110"
+          style={{ background: product.accentColor }}
+        />
+        <span className="chip absolute left-4 top-4 z-10 bg-white/90 backdrop-blur" style={{ color: product.accentColor }}>
           {product.category}
         </span>
         <Image
           src={product.image}
           alt={`${product.brandName} pack`}
           fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-contain px-8 pb-6 pt-14 drop-shadow-[0_18px_24px_rgba(29,26,51,0.18)] transition-transform duration-500 group-hover:scale-[1.03]"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-contain px-10 pb-6 pt-14 drop-shadow-[0_18px_24px_rgba(29,26,51,0.18)] transition-transform duration-500 group-hover:-rotate-1 group-hover:scale-[1.05]"
         />
       </div>
-      <div className="flex flex-1 flex-col px-3 pb-3 pt-5">
-        <h3 className="font-display text-[1.75rem] font-medium leading-tight text-foreground"><BrandName name={product.brandName} /></h3>
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="font-display text-[1.75rem] font-medium leading-tight text-foreground">
+          <BrandName name={product.brandName} />
+        </h3>
         <p className="mt-1 text-sm font-semibold" style={{ color: product.accentColor }}>
           {product.tagline}
         </p>
-        <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{product.clinicalIndication}.</p>
-        <p className="mt-4 rounded-2xl bg-[var(--surface-2)] px-4 py-3 text-xs leading-relaxed text-foreground/80">
-          <span className="font-semibold text-foreground">Composition: </span>
-          {product.composition}
-        </p>
-        <div className="mt-auto flex items-center justify-between gap-3 pt-5">
-          <RxBadge product={product} />
-          <span className="inline-flex items-center gap-1 text-sm font-semibold text-foreground">
-            View <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        <dl className="mt-5 grid gap-3 border-t border-[var(--border)] pt-4 text-sm">
+          <Fact label="Used for" value={product.clinicalIndication} />
+          <Fact label="Composition" value={product.composition} />
+          <Fact label="Pack" value={product.pack} />
+        </dl>
+        <div className="mt-auto flex items-end justify-between gap-3 pt-6">
+          <div>
+            <p className="font-display text-2xl font-medium text-foreground">₹{product.price.toLocaleString("en-IN")}</p>
+            <div className="mt-2">
+              <RxBadge product={product} />
+            </div>
+          </div>
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-indigo text-white transition-transform group-hover:rotate-45">
+            <ArrowUpRight className="h-5 w-5" />
           </span>
         </div>
       </div>
     </Link>
+  );
+}
+
+function Fact({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="grid grid-cols-[6.5rem_1fr] gap-3">
+      <dt className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">{label}</dt>
+      <dd className="leading-snug text-foreground/85">{value}</dd>
+    </div>
   );
 }
 
