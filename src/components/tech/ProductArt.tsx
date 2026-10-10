@@ -14,7 +14,7 @@ function Device({ children, title, tone = "light" }: { children: React.ReactNode
       <div className="absolute left-1/2 top-1.5 z-10 h-4 w-20 -translate-x-1/2 rounded-full bg-[#0E1033]" />
       <div
         className={`flex items-center gap-2 rounded-t-[1.7rem] px-4 pb-3 pt-8 text-xs font-semibold ${
-          tone === "chat" ? "bg-[#0F6E68] text-white" : "border-b border-[#EEF0F6] text-[#0E1033]"
+          tone === "chat" ? "bg-[#0E6B4A] text-white" : "border-b border-[#EEF0F6] text-[#0E1033]"
         }`}
       >
         {title}

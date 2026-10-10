@@ -4,6 +4,10 @@ export interface TechProduct {
   problem: string;
   features: string[];
   note?: string;
+  /** Public website for products sold on their own. */
+  site?: { url: string; label: string; about: string };
+  /** Product's own colours, used on its card instead of the Milarch Tech ones. */
+  brand?: { accent: string; deep: string; tint: string };
 }
 
 export const techProducts: TechProduct[] = [
@@ -30,6 +34,13 @@ export const techProducts: TechProduct[] = [
       "Template management built on WhatsApp's Business API rules",
     ],
     note: "Multi-tenant, and powers outreach for Milarch's own products",
+    site: {
+      url: "https://vaartabot.com",
+      label: "vaartabot.com",
+      about:
+        "VaartaBot is our WhatsApp Business platform, live at vaartabot.com for any business. Automate replies, run broadcast campaigns and turn every chat into a tracked lead, all from one dashboard.",
+    },
+    brand: { accent: "#1FAF5A", deep: "#0E6B4A", tint: "#E8F7EE" },
   },
   {
     name: "LadderStep",

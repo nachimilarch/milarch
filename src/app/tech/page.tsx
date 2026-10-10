@@ -1,8 +1,9 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import HeroCircuit from "@/components/tech/HeroCircuit";
 import { CipherArt, LadderArt, VaartaArt } from "@/components/tech/ProductArt";
 import { BillingArt, CmsArt, CrmArt, ErpArt, LmsArt } from "@/components/tech/SolutionArt";
 import ContactForm from "@/components/sections/ContactForm";
+import VaartaBotLogo from "@/components/tech/VaartaBotLogo";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { techProducts, techServices, techSolutions } from "@/data/tech";
 
@@ -149,18 +150,32 @@ export default function TechHome() {
               const Art = PRODUCT_ART[p.name];
               const flip = i % 2 === 1;
               return (
-                <article key={p.name} className="reveal grid items-center gap-8 overflow-hidden rounded-3xl border border-[#E3E6F0] bg-[#F7F8FC] p-6 md:p-10 lg:grid-cols-2 lg:gap-12">
+                <article
+                  key={p.name}
+                  className="reveal grid items-center gap-8 overflow-hidden rounded-3xl border border-[#E3E6F0] bg-[#F7F8FC] p-6 md:p-10 lg:grid-cols-2 lg:gap-12"
+                  style={p.brand ? { background: `linear-gradient(135deg, ${p.brand.tint}, #FFFFFF 70%)`, borderColor: `${p.brand.accent}40` } : undefined}
+                >
                   <div className={flip ? "lg:order-2" : ""}>
                     <p className="font-mono text-xs text-[#8A8FA8]">
                       0{i + 1} · {p.kind}
                     </p>
-                    <h3 className="mt-3 font-tech text-3xl font-semibold md:text-4xl">{p.name}</h3>
+                    {p.name === "VaartaBot" ? (
+                      <h3 className="mt-3">
+                        <VaartaBotLogo />
+                        <span className="sr-only">VaartaBot</span>
+                      </h3>
+                    ) : (
+                      <h3 className="mt-3 font-tech text-3xl font-semibold md:text-4xl">{p.name}</h3>
+                    )}
                     <p className="mt-4 text-lg leading-relaxed text-[#5A5F7D]">{p.problem}</p>
                     <ul className="mt-6 grid gap-3 text-[15px]">
                       {p.features.map((f) => (
                         <li key={f} className="flex gap-3">
-                          <span className="mt-1.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[#1FB5BE]/15">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#1FB5BE]" />
+                          <span
+                            className="mt-1.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[#1FB5BE]/15"
+                            style={p.brand ? { background: `${p.brand.accent}26` } : undefined}
+                          >
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#1FB5BE]" style={p.brand ? { background: p.brand.accent } : undefined} />
                           </span>
                           {f}
                         </li>
@@ -171,10 +186,24 @@ export default function TechHome() {
                         <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#16A36A]" /> {p.note}
                       </p>
                     )}
+                    {p.site && (
+                      <div className="mt-7 rounded-2xl border bg-white p-5" style={{ borderColor: `${p.brand?.accent ?? "#1FB5BE"}40` }}>
+                        <p className="leading-relaxed text-[#3D4260]">{p.site.about}</p>
+                        <a
+                          href={p.site.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-4 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+                          style={{ background: `linear-gradient(90deg, ${p.brand?.accent ?? "#1FB5BE"}, ${p.brand?.deep ?? "#3B3A9E"})` }}
+                        >
+                          Visit {p.site.label} <ArrowUpRight className="h-4 w-4" />
+                        </a>
+                      </div>
+                    )}
                   </div>
                   <div
                     className={`relative flex min-h-[26rem] items-center justify-center overflow-hidden rounded-[1.5rem] p-5 sm:p-8 ${flip ? "lg:order-1" : ""}`}
-                    style={{ background: PRODUCT_TINTS[i] }}
+                    style={{ background: p.brand?.tint ?? PRODUCT_TINTS[i] }}
                   >
                     <div className="tech-dots pointer-events-none absolute inset-0 opacity-60" />
                     <div className="relative w-full">
