@@ -7,7 +7,7 @@ export interface TechProduct {
   /** Public website for products sold on their own. */
   site?: { url: string; label: string; about: string };
   /** Product's own colours, used on its card instead of the Milarch Tech ones. */
-  brand?: { accent: string; deep: string; tint: string };
+  brand?: { accent: string; deep: string; tint: string; logo?: string };
 }
 
 export const techProducts: TechProduct[] = [
@@ -38,9 +38,9 @@ export const techProducts: TechProduct[] = [
       url: "https://vaartabot.com",
       label: "vaartabot.com",
       about:
-        "VaartaBot is our WhatsApp Business platform, live at vaartabot.com for any business. Automate replies, run broadcast campaigns and turn every chat into a tracked lead, all from one dashboard.",
+        "A WhatsApp sales assistant for Indian businesses. It replies to every enquiry within minutes, day and night, answers IndiaMart buyers on WhatsApp, books appointments right in the chat and keeps every lead in one CRM. Built on Meta's official WhatsApp Business API, from ₹999 with no monthly fee.",
     },
-    brand: { accent: "#1FAF5A", deep: "#0E6B4A", tint: "#E8F7EE" },
+    brand: { accent: "#1797A1", deep: "#2E0B63", tint: "#EEF4F8", logo: "/brand/vaartabot-logo.svg" },
   },
   {
     name: "LadderStep",

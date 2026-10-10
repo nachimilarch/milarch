@@ -3,7 +3,7 @@ import HeroCircuit from "@/components/tech/HeroCircuit";
 import { CipherArt, LadderArt, VaartaArt } from "@/components/tech/ProductArt";
 import { BillingArt, CmsArt, CrmArt, ErpArt, LmsArt } from "@/components/tech/SolutionArt";
 import ContactForm from "@/components/sections/ContactForm";
-import VaartaBotLogo from "@/components/tech/VaartaBotLogo";
+import Image from "next/image";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { techProducts, techServices, techSolutions } from "@/data/tech";
 
@@ -159,10 +159,9 @@ export default function TechHome() {
                     <p className="font-mono text-xs text-[#8A8FA8]">
                       0{i + 1} · {p.kind}
                     </p>
-                    {p.name === "VaartaBot" ? (
-                      <h3 className="mt-3">
-                        <VaartaBotLogo />
-                        <span className="sr-only">VaartaBot</span>
+                    {p.brand?.logo ? (
+                      <h3 className="mt-4">
+                        <Image src={p.brand.logo} alt={`${p.name} by Milarch Tech`} width={300} height={70} className="h-14 w-auto md:h-16" />
                       </h3>
                     ) : (
                       <h3 className="mt-3 font-tech text-3xl font-semibold md:text-4xl">{p.name}</h3>

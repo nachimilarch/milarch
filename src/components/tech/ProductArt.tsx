@@ -14,7 +14,7 @@ function Device({ children, title, tone = "light" }: { children: React.ReactNode
       <div className="absolute left-1/2 top-1.5 z-10 h-4 w-20 -translate-x-1/2 rounded-full bg-[#0E1033]" />
       <div
         className={`flex items-center gap-2 rounded-t-[1.7rem] px-4 pb-3 pt-8 text-xs font-semibold ${
-          tone === "chat" ? "bg-[#0E6B4A] text-white" : "border-b border-[#EEF0F6] text-[#0E1033]"
+          tone === "chat" ? "bg-gradient-to-r from-[#1797A1] to-[#2E0B63] text-white" : "border-b border-[#EEF0F6] text-[#0E1033]"
         }`}
       >
         {title}
@@ -104,7 +104,7 @@ export function VaartaArt() {
           </div>
         ))}
       </div>
-      <Device title={<span className="flex items-center gap-2"><Bot className="h-4 w-4" /> Clinic assistant</span> } tone="chat">
+      <Device title={<span className="flex items-center gap-2"><Bot className="h-4 w-4" /> VaartaBot</span> } tone="chat">
         <div className="flex h-full flex-col gap-2 bg-[#EFEAE2] p-3 text-[11.5px] leading-snug">
           <Bubble me t={0.4}>Hi, what are your clinic timings?</Bubble>
           <Bubble t={1.2}>We&apos;re open 9 am to 7 pm, Monday to Saturday. Would you like to book a slot?</Bubble>
