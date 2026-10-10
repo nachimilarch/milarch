@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     type: "website",
   },
+  verification: {
+    google: "qk1nHFKRq0hYUcxCMOvzwJDWJuZRCmlF11k9IdRYG3s",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
