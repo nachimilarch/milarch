@@ -1,23 +1,19 @@
-import HeroSection from "@/components/sections/HeroSection";
-import BrandSplitSection from "@/components/sections/BrandSplitSection";
-import PharmaShowcase from "@/components/sections/PharmaShowcase";
-import MissionVision from "@/components/sections/MissionVision";
-import TechServices from "@/components/sections/TechServices";
-import StatsSection from "@/components/sections/StatsSection";
-import FounderSection from "@/components/sections/FounderSection";
-import ContactSection from "@/components/sections/ContactSection";
+import Hero from "@/components/sections/Hero";
+import Products from "@/components/sections/Products";
+import Doctors from "@/components/sections/Doctors";
+import About from "@/components/sections/About";
+import Tech from "@/components/sections/Tech";
+import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
     <>
-      <HeroSection />
-      <BrandSplitSection />
-      <PharmaShowcase />
-      <MissionVision />
-      <TechServices />
-      <StatsSection />
-      <FounderSection />
-      <ContactSection />
+      <Hero />
+      <Products />
+      <Doctors />
+      <About />
+      <Tech />
+      <Contact />
     </>
   );
 }

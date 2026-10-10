@@ -6,7 +6,6 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -17,6 +16,8 @@ const config: Config = {
         "surface-2": "var(--surface-2)",
         border:      "var(--border)",
         muted:       "var(--muted)",
+        ink:         "var(--ink)",
+        cream:       "var(--cream)",
 
         /* ── Semantic role tokens ── */
         primary: {
@@ -39,28 +40,21 @@ const config: Config = {
         magenta: "var(--highlight-magenta)",
         gold: {
           DEFAULT: "var(--highlight-gold)",
-          dark:    "#7A5A00",   /* accessible text version (WCAG AA on white) */
+          dark:    "#7A5A00",
         },
 
-        /* ── Updated legacy aliases — same Tailwind name, corrected brand value ── */
-        purple:    "#4A3D8F",   /* was #5E51A2 — now matches --brand-purple */
-        indigo:    "#3D3589",   /* was #322970 — now matches --brand-indigo  */
-        softwhite: "#F8FAFC",
-
-        /* ── Brand primitives (use when you need exact hex) ── */
-        "brand-purple":   "#4A3D8F",
-        "brand-indigo":   "#3D3589",
-        "brand-teal":     "#5BBAB5",
+        /* ── Brand primitives, sampled from the Milarch logo ── */
+        purple:           "#5B55A5",
+        indigo:           "#2A2463",
+        "brand-purple":   "#5B55A5",
+        "brand-indigo":   "#2A2463",
+        "brand-teal":     "#5EC4BA",
         "brand-electric": "#2BB2C2",
-        "brand-pink":     "#E81B62",
-        "brand-gold":     "#FDB813",
-        "brand-magenta":  "#E8217A",
+        "brand-pink":     "#E5195F",
+        "brand-gold":     "#FFC20E",
+        "brand-magenta":  "#E5195F",
       },
       backgroundImage: {
-        "gradient-radial":  "radial-gradient(var(--tw-gradient-stops))",
-        "fluid-bg":         "radial-gradient(circle at 50% 50%, #FFFFFF 0%, #F7F6FB 100%)",
-        "tech-gradient":    "linear-gradient(135deg, #2BB2C2 0%, #3D3589 100%)",
-        "pharma-gradient":  "linear-gradient(135deg, #4A3D8F 0%, #E81B62 50%, #FDB813 100%)",
         "gradient-brand":   "var(--gradient-brand)",
         "gradient-pharma":  "var(--gradient-pharma)",
         "gradient-tech":    "var(--gradient-tech)",
@@ -72,20 +66,12 @@ const config: Config = {
         lg:      "var(--shadow-lg)",
         colored: "var(--shadow-colored)",
       },
-      animation: {
-        "float":          "float 6s ease-in-out infinite",
-        "float-delayed":  "float 6s ease-in-out 3s infinite",
-        "pulse-slow":     "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-      },
-      keyframes: {
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%":      { transform: "translateY(-20px)" },
-        },
-      },
       fontFamily: {
-        sans:    ["var(--font-inter)"],
-        display: ["var(--font-space-grotesk)"],
+        sans:    ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+      },
+      maxWidth: {
+        site: "76rem",
       },
     },
   },

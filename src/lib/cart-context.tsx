@@ -8,7 +8,6 @@ import {
   useMemo,
   useState,
 } from "react";
-import type { LucideIcon } from "lucide-react";
 import { getProductBySlug } from "@/data/products";
 
 export interface CartItem {
@@ -22,7 +21,8 @@ export interface CartLine extends CartItem {
   price: number;
   accentColor: string;
   requiresPrescription: boolean;
-  Icon: LucideIcon;
+  accentTint: string;
+  image: string;
 }
 
 interface CartContextValue {
@@ -99,7 +99,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           price: product.price,
           accentColor: product.accentColor,
           requiresPrescription: product.requiresPrescription,
-          Icon: product.Icon,
+          accentTint: product.accentTint,
+          image: product.image,
         };
       })
       .filter((line): line is CartLine => line !== null);

@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Minus, Plus, ShoppingBag, Trash2, ShieldAlert } from "lucide-react";
@@ -56,10 +57,10 @@ export default function CartPage() {
               className="accent-card glass rounded-2xl p-5 flex items-center gap-5"
             >
               <div
-                className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center"
-                style={{ backgroundColor: `${line.accentColor}22` }}
+                className="relative w-16 h-12 rounded-xl flex-shrink-0 overflow-hidden"
+                style={{ backgroundColor: line.accentTint }}
               >
-                <line.Icon className="w-5 h-5" style={{ color: line.accentColor }} />
+                <Image src={line.image} alt="" fill sizes="64px" className="object-contain p-1" />
               </div>
               <div className="flex-1 min-w-0">
                 <Link href={`/pharma/products/${line.slug}`} className="font-display font-bold text-foreground hover:underline">

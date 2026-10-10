@@ -1,33 +1,40 @@
-import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/layout/SmoothScroll";
 import { ThemeProvider } from "./providers";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import CustomCursor from "@/components/ui/CustomCursor";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
-import dynamic from "next/dynamic";
-const FloatingPillsBackground = dynamic(
-  () => import("@/components/canvas/FloatingPillsBackground"),
-  { ssr: false }
-);
 
-const inter = Inter({
+const sans = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sans",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const display = Fraunces({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-display",
   display: "swap",
+  axes: ["SOFT", "opsz"],
 });
 
 export const metadata: Metadata = {
-  title: "MILARCH | Where Health Meets Innovation",
-  description: "Milarch Pharma & Milarch Tech — Hyderabad, India",
+  metadataBase: new URL("https://milarch.in"),
+  title: {
+    default: "Milarch Pharma | Women's health, Hyderabad",
+    template: "%s | Milarch Pharma",
+  },
+  description:
+    "Milarch Pharma makes specialised formulations for women's health: pregnancy and fetal growth, PCOS, vaginal infections, gut and vaginal flora, and cervical health. Hyderabad, India.",
+  openGraph: {
+    title: "Milarch Pharma",
+    description: "In support of healthy pregnancy. Organised interventions. Decisive outcomes.",
+    url: "https://milarch.in",
+    siteName: "Milarch",
+    locale: "en_IN",
+    type: "website",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -38,25 +45,39 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#FBF8F4",
+};
+
+// Runs before paint: marks JS as available (so .reveal blocks can start hidden)
+// and fades them in as they scroll into view. Without JS everything stays visible.
+const revealScript = `
+document.documentElement.classList.add('js');
+addEventListener('DOMContentLoaded',function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+});`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scrollbar-hide" suppressHydrationWarning>
+    <html lang="en-IN" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: revealScript }} />
+      </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased bg-background text-foreground min-h-screen flex flex-col selection:bg-teal/30 selection:text-white transition-colors duration-500`}
+        className={`${sans.variable} ${display.variable} font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <ThemeProvider>
-          <FloatingPillsBackground />
-          <SmoothScroll>
-            <CustomCursor />
-            <Header />
-            {children}
-            <Footer />
-            <FloatingWhatsApp />
-          </SmoothScroll>
+          <Header />
+          <main className="flex-grow flex flex-col">{children}</main>
+          <Footer />
+          <FloatingWhatsApp />
         </ThemeProvider>
       </body>
     </html>

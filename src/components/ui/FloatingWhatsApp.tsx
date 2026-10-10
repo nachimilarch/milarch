@@ -1,6 +1,4 @@
-"use client";
-
-import { MessageCircle } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
 export default function FloatingWhatsApp() {
   return (
@@ -8,10 +6,10 @@ export default function FloatingWhatsApp() {
       href="https://wa.me/917083820068"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-[0_0_15px_rgba(37,211,102,0.6)] transition-all duration-300 animate-float-delayed flex items-center justify-center"
-      aria-label="Contact us on WhatsApp"
+      className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#1FA855] text-white shadow-lg transition-transform hover:scale-105"
+      aria-label="Chat with Milarch on WhatsApp"
     >
-      <MessageCircle className="w-6 h-6" />
+      <WhatsAppIcon className="h-7 w-7" />
     </a>
   );
 }
