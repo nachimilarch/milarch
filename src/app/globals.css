@@ -290,7 +290,7 @@
 /* ── Animated Milarch mark ──
    Pieces start hidden only when JS is on and motion is allowed; .in (added
    by the reveal script when the mark scrolls into view) plays the assembly. */
-.mark-anim g { transform-box: fill-box; }
+.mark-anim g[class] { transform-box: fill-box; }
 .m-legl, .m-legr, .m-body, .m-baby { transform-origin: 50% 100%; }
 .m-head, .m-bhead, .m-head-idle, .m-bhead-idle { transform-origin: 50% 50%; }
 .m-bhead-idle { transform-origin: 30% 100%; }

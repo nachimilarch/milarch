@@ -5,7 +5,7 @@ import TechFooter from "@/components/tech/TechFooter";
 export const metadata: Metadata = {
   title: { absolute: "Milarch Tech | Software for healthcare and modern businesses" },
   description:
-    "Milarch Tech builds field-force apps, WhatsApp platforms, CRMs and healthcare web apps. Four products live in production. Hyderabad, India.",
+    "Milarch Tech builds custom billing systems, ERP, CMS, LMS and CRM, plus its own platforms for pharma field teams, WhatsApp-first businesses and recruitment. Hyderabad, India.",
 };
 
 export default function TechLayout({ children }: { children: React.ReactNode }) {

@@ -1,4 +1,4 @@
-import { Bot, Check, CheckCheck, Globe, Mail, MapPin, MessageCircle, Phone, Users } from "lucide-react";
+import { Bot, Check, CheckCheck, MapPin } from "lucide-react";
 
 /*
  * Illustrated screens for each Milarch Tech product. They are drawings of the
@@ -186,59 +186,6 @@ function Person({ initials, className, t }: { initials: string; className: strin
         <span className="h-1.5 flex-1 rounded-full bg-[#E3E6F0]" />
       </div>
       <span className="mt-2 block h-1.5 w-2/3 rounded-full bg-[#EEF0F6]" />
-    </div>
-  );
-}
-
-/* CertifyBusiness CRM: five lead channels converging on one pipeline */
-export function CrmArt() {
-  const channels = [
-    { icon: Mail, label: "Email" },
-    { icon: MessageCircle, label: "WhatsApp" },
-    { icon: Globe, label: "Website" },
-    { icon: Phone, label: "Calls" },
-    { icon: Users, label: "Referrals" },
-  ];
-  const stages = [
-    ["New", 92],
-    ["Contacted", 74],
-    ["Replied", 52],
-    ["Proposal", 34],
-    ["Won", 20],
-  ] as const;
-  return (
-    <div className="mx-auto grid w-full max-w-lg grid-cols-[auto_1fr_1.4fr] items-center">
-      <ul className="space-y-2.5">
-        {channels.map(({ icon: Icon, label }, i) => (
-          <li key={label} className="pop flex items-center gap-2 rounded-xl border border-[#E3E6F0] bg-white px-2.5 py-2 text-[11px] font-semibold shadow-sm" style={d(i * 0.12)}>
-            <Icon className="h-3.5 w-3.5 text-[#1FB5BE]" /> {label}
-          </li>
-        ))}
-      </ul>
-      <svg viewBox="0 0 80 200" preserveAspectRatio="none" className="h-[13rem] w-full" aria-hidden="true">
-        {[20, 60, 100, 140, 180].map((y, i) => (
-          <g key={y}>
-            <path d={`M0 ${y}C40 ${y} 40 100 80 100`} pathLength={1} className={`draw d${Math.min(i, 4)}`} fill="none" stroke="#C9CEE0" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-            <path d={`M0 ${y}C40 ${y} 40 100 80 100`} pathLength={1000} className={`trace-pulse p${i % 4}`} fill="none" stroke="#1FB5BE" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
-          </g>
-        ))}
-      </svg>
-      <div className="tech-card p-4 shadow-[0_30px_60px_-30px_rgba(42,36,99,0.35)]">
-        <p className="font-mono text-[10px] uppercase tracking-wider text-[#8A8FA8]">Pipeline</p>
-        <div className="mt-3 space-y-2">
-          {stages.map(([s, w], i) => (
-            <div key={s} className="flex items-center gap-2 text-[10.5px]">
-              <span className="w-14 shrink-0 text-[#5A5F7D]">{s}</span>
-              <span className="h-2.5 flex-1 overflow-hidden rounded-full bg-[#F1F3F9]">
-                <span className="grow-x block h-full rounded-full bg-gradient-to-r from-[#2BC4C9] to-[#3B3A9E]" style={{ width: `${w}%`, ...d(0.6 + i * 0.15) }} />
-              </span>
-            </div>
-          ))}
-        </div>
-        <p className="pop mt-4 flex items-center gap-1.5 rounded-lg bg-[#16A36A]/10 px-2.5 py-1.5 text-[10.5px] font-semibold text-[#0F7A4F]" style={d(1.8)}>
-          <Check className="h-3 w-3" /> Reply received, follow-up booked
-        </p>
-      </div>
     </div>
   );
 }

@@ -1,18 +1,26 @@
-import { ArrowRight, Boxes, Code2, Database, Globe, MessageCircle, Search, ShoppingCart } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import HeroCircuit from "@/components/tech/HeroCircuit";
-import { CipherArt, CrmArt, LadderArt, VaartaArt } from "@/components/tech/ProductArt";
+import { CipherArt, LadderArt, VaartaArt } from "@/components/tech/ProductArt";
+import { BillingArt, CmsArt, CrmArt, ErpArt, LmsArt } from "@/components/tech/SolutionArt";
 import ContactForm from "@/components/sections/ContactForm";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
-import { techProducts, techServices } from "@/data/tech";
+import { techProducts, techServices, techSolutions } from "@/data/tech";
 
-const SERVICE_ICONS = [Globe, MessageCircle, Boxes, ShoppingCart, Search, Database];
 const PRODUCT_ART: Record<string, () => JSX.Element> = {
   Cipher: CipherArt,
   VaartaBot: VaartaArt,
   LadderStep: LadderArt,
-  "CertifyBusiness CRM": CrmArt,
 };
-const PRODUCT_TINTS = ["#E8F7F8", "#E9F6EF", "#EEEDFA", "#EAF1FB"];
+const PRODUCT_TINTS = ["#E8F7F8", "#E9F6EF", "#EEEDFA"];
+const SOLUTION_ART: Record<(typeof techSolutions)[number]["id"], () => JSX.Element> = {
+  billing: BillingArt,
+  erp: ErpArt,
+  cms: CmsArt,
+  lms: LmsArt,
+  crm: CrmArt,
+};
+/* Bento layout: billing and ERP get the wide cards */
+const SOLUTION_SPAN = ["lg:col-span-3", "lg:col-span-3", "lg:col-span-2", "lg:col-span-2", "lg:col-span-2"];
 
 const PRINCIPLES = [
   {
@@ -48,8 +56,8 @@ export default function TechHome() {
               Software that runs <span className="tech-grad-text">real businesses</span>.
             </h1>
             <p className="rise rise-2 mt-6 max-w-xl text-lg leading-relaxed text-[#5A5F7D]">
-              We build the platforms behind pharma field teams, WhatsApp-first businesses, recruitment agencies and
-              compliance firms. Four products, all live in production.
+              Custom billing systems, ERP, CMS, LMS and CRM, built around how your business actually works. Plus our
+              own platforms for pharma field teams, WhatsApp-first businesses and recruitment agencies.
             </p>
             <div className="rise rise-3 mt-9 flex flex-wrap gap-3">
               <a href="#contact" className="tech-btn !px-6 !py-3.5">
@@ -60,9 +68,9 @@ export default function TechHome() {
               </a>
             </div>
             <ul className="rise rise-4 mt-10 flex flex-wrap gap-2 font-mono text-xs text-[#5A5F7D]">
-              {techProducts.map((p) => (
-                <li key={p.name} className="inline-flex items-center gap-2 rounded-lg border border-[#E3E6F0] bg-white px-3 py-1.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#16A36A]" /> {p.name}
+              {techSolutions.map((p) => (
+                <li key={p.id} className="inline-flex items-center gap-2 rounded-lg border border-[#E3E6F0] bg-white px-3 py-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#1FB5BE]" /> {p.title.replace("Custom billing systems", "Billing")}
                 </li>
               ))}
             </ul>
@@ -71,11 +79,66 @@ export default function TechHome() {
         </div>
       </section>
 
+      {/* Solutions */}
+      <section id="solutions" className="px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+        <div className="mx-auto max-w-site">
+          <div className="reveal grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
+            <div>
+              <p className="tech-eyebrow">What we build</p>
+              <h2 className="mt-4 max-w-2xl font-tech text-4xl font-semibold tracking-tight text-balance md:text-5xl">
+                Business systems, built to fit
+              </h2>
+            </div>
+            <p className="max-w-sm text-[#5A5F7D]">
+              Off-the-shelf software makes you change how you work. We build systems around your process, on a stack you
+              can own and maintain.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 lg:grid-cols-6">
+            {techSolutions.map((s, i) => {
+              const Art = SOLUTION_ART[s.id];
+              return (
+                <article key={s.id} className={`reveal tech-card group flex flex-col overflow-hidden transition-shadow hover:shadow-[0_30px_60px_-30px_rgba(42,36,99,0.4)] ${SOLUTION_SPAN[i]}`}>
+                  <div className="relative flex min-h-[15rem] items-center justify-center overflow-hidden bg-gradient-to-br from-[#EEF9FA] to-[#F0EFFB] p-6">
+                    <div className="tech-dots pointer-events-none absolute inset-0 opacity-60" />
+                    <div className="relative w-full">
+                      <Art />
+                    </div>
+                  </div>
+                  <div className="flex flex-1 flex-col p-6 md:p-7">
+                    <h3 className="font-tech text-2xl font-semibold">{s.title}</h3>
+                    <p className="mt-2 leading-relaxed text-[#5A5F7D]">{s.body}</p>
+                    <ul className="mt-4 grid gap-2 text-sm">
+                      {s.points.map((pt) => (
+                        <li key={pt} className="flex gap-2.5">
+                          <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#1FB5BE]" />
+                          {pt}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="reveal mt-10 flex flex-wrap items-center gap-2">
+            <span className="mr-2 text-sm font-semibold text-[#5A5F7D]">We also build</span>
+            {techServices.map((t) => (
+              <span key={t} className="rounded-lg border border-[#E3E6F0] bg-white px-3.5 py-2 text-sm">
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Products */}
-      <section id="work" className="px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+      <section id="work" className="border-y border-[#E3E6F0] bg-white px-4 py-20 sm:px-6 md:py-28 lg:px-8">
         <div className="mx-auto max-w-site">
           <div className="reveal mx-auto max-w-2xl text-center">
-            <p className="tech-eyebrow">Our products</p>
+            <p className="tech-eyebrow">Our own products</p>
             <h2 className="mt-4 font-tech text-4xl font-semibold tracking-tight text-balance md:text-5xl">
               Built for real problems, running today
             </h2>
@@ -86,7 +149,7 @@ export default function TechHome() {
               const Art = PRODUCT_ART[p.name];
               const flip = i % 2 === 1;
               return (
-                <article key={p.name} className="reveal tech-card grid items-center gap-8 overflow-hidden p-6 md:p-10 lg:grid-cols-2 lg:gap-12">
+                <article key={p.name} className="reveal grid items-center gap-8 overflow-hidden rounded-3xl border border-[#E3E6F0] bg-[#F7F8FC] p-6 md:p-10 lg:grid-cols-2 lg:gap-12">
                   <div className={flip ? "lg:order-2" : ""}>
                     <p className="font-mono text-xs text-[#8A8FA8]">
                       0{i + 1} · {p.kind}
@@ -119,43 +182,6 @@ export default function TechHome() {
                     </div>
                   </div>
                 </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Services */}
-      <section id="services" className="border-y border-[#E3E6F0] bg-white px-4 py-20 sm:px-6 md:py-28 lg:px-8">
-        <div className="mx-auto max-w-site">
-          <div className="reveal grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
-            <div>
-              <p className="tech-eyebrow">Services</p>
-              <h2 className="mt-4 max-w-2xl font-tech text-4xl font-semibold tracking-tight text-balance md:text-5xl">
-                What we can build for you
-              </h2>
-            </div>
-            <p className="max-w-sm text-[#5A5F7D]">
-              Specialists in healthcare and pharma, and just as comfortable with any business that runs on WhatsApp and
-              spreadsheets today.
-            </p>
-          </div>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {techServices.map((s, i) => {
-              const Icon = SERVICE_ICONS[i] ?? Code2;
-              return (
-                <div key={s.title} className="reveal group relative overflow-hidden rounded-3xl border border-[#E3E6F0] bg-[#F7F8FC] p-7 transition-all hover:-translate-y-1 hover:border-[#1FB5BE]/50 hover:bg-white hover:shadow-[0_24px_50px_-28px_rgba(42,36,99,0.4)]">
-                  <svg viewBox="0 0 120 120" className="pointer-events-none absolute -right-4 -top-4 h-28 w-28 text-[#C9CEE0] transition-colors group-hover:text-[#1FB5BE]" aria-hidden="true">
-                    <path d="M120 30H70l-20 20v70M120 60H95l-15 15v45" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <circle cx="50" cy="118" r="4" fill="currentColor" />
-                    <circle cx="80" cy="118" r="4" fill="currentColor" />
-                  </svg>
-                  <span className="relative grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-[#2BC4C9] to-[#3B3A9E] text-white shadow-[0_10px_20px_-10px_rgba(59,58,158,0.7)]">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <h3 className="relative mt-6 font-tech text-lg font-semibold">{s.title}</h3>
-                  <p className="relative mt-2 text-sm leading-relaxed text-[#5A5F7D]">{s.body}</p>
-                </div>
               );
             })}
           </div>

@@ -42,42 +42,47 @@ export const techProducts: TechProduct[] = [
       "Training services and placement-fee billing built in",
     ],
   },
-  {
-    name: "CertifyBusiness CRM",
-    kind: "Outbound CRM for compliance services",
-    problem: "Leads arrive from five channels, and half go cold before anyone follows up.",
-    features: [
-      "Contact lists with proper segmentation",
-      "Email and WhatsApp campaigns from one place",
-      "Reply tracking, so nothing falls through",
-      "A real pipeline view instead of a spreadsheet",
-    ],
-  },
 ];
 
+/** Custom systems we build for clients, shown as the main offering. */
+export const techSolutions = [
+  {
+    id: "billing",
+    title: "Custom billing systems",
+    body: "Billing that follows how your business actually charges, instead of bending your process to an off-the-shelf tool.",
+    points: ["Invoices, credit notes and receipts", "Tax calculation and payment tracking", "Linked to stock, orders and accounts"],
+  },
+  {
+    id: "erp",
+    title: "ERP",
+    body: "One system for purchase, inventory, sales, people and accounts, built around the modules you need.",
+    points: ["Only the modules you use", "Role-based access for every team", "Reports leadership can trust"],
+  },
+  {
+    id: "cms",
+    title: "CMS",
+    body: "Content management your team can run without a developer for every change.",
+    points: ["Pages, products and posts", "Drafts, approvals and publishing", "Fast, search-friendly websites"],
+  },
+  {
+    id: "lms",
+    title: "LMS",
+    body: "Learning platforms for training field teams, staff or customers.",
+    points: ["Courses, lessons and quizzes", "Progress tracking", "Completion certificates"],
+  },
+  {
+    id: "crm",
+    title: "CRM",
+    body: "A pipeline built for how you find and keep customers, with every channel in one place.",
+    points: ["Leads from web, email, calls and WhatsApp", "Follow-ups so nothing goes cold", "A real pipeline instead of a spreadsheet"],
+  },
+] as const;
+
 export const techServices = [
-  {
-    title: "Pharma brand websites",
-    body: "Brand sites, product pages, doctor portals and patient education, built for trust and conversion.",
-  },
-  {
-    title: "WhatsApp chatbots",
-    body: "Bots for patient queries, product questions, detailing support and appointments.",
-  },
-  {
-    title: "Healthcare web apps",
-    body: "Clinic management, prescription tracking, patient onboarding and telemedicine workflows.",
-  },
-  {
-    title: "E-commerce and direct-to-consumer stores",
-    body: "Catalogues, secure checkout, prescription upload and order tracking for pharma and wellness brands.",
-  },
-  {
-    title: "Search and digital marketing for pharma",
-    body: "Search engine optimisation, content and campaigns for doctors and patients in Tier-1 and Tier-2 cities.",
-  },
-  {
-    title: "Application programming interfaces (APIs) and backends",
-    body: "Database design and backend services for healthcare platforms, on Node.js, Next.js and PostgreSQL.",
-  },
+  "Pharma brand websites",
+  "WhatsApp chatbots",
+  "Healthcare web apps",
+  "E-commerce stores",
+  "Search and digital marketing",
+  "APIs and backends",
 ];

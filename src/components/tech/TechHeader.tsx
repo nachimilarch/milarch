@@ -3,8 +3,8 @@ import Link from "next/link";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const LINKS = [
+  { href: "/tech#solutions", label: "What we build" },
   { href: "/tech#work", label: "Products" },
-  { href: "/tech#services", label: "Services" },
   { href: "/tech#approach", label: "How we build" },
   { href: "/tech#contact", label: "Contact" },
 ];

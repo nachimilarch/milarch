@@ -1,26 +1,35 @@
-import { Briefcase, CheckCircle2, MapPin, MessageCircle, Send } from "lucide-react";
+import { Briefcase, CheckCircle2, MapPin, MessageCircle, Receipt } from "lucide-react";
 
 /*
- * The Milarch Tech mark drawn large as live circuitry: the M traces draw in,
- * signals run along them, and four product events pop up around it.
- * Coordinates are in a 720 × 720 viewBox; the cards sit in the empty bands
- * above and below the M, positioned in %.
+ * The Milarch Tech mark drawn large as live circuitry: the traces draw in,
+ * signals run along them, and product events pop up around it.
+ * The mark uses the logo's own geometry (traced from logo-tech.png, 935 × 657),
+ * placed inside a 720 × 720 viewBox; the cards sit in the empty bands above
+ * and below it, positioned in %.
  */
+const MARK = "translate(70 175) scale(.62)";
 const M_TRACES = [
-  "M220 580V320l50-50h40l50 50v260",
-  "M360 410v-90l50-50h40l50 50v190l30 30 30-30V250",
-  "M220 200h290l50 50",
+  // left arch, ending on the middle node
+  "M45 600V255l90-100h105l92 107v338",
+  // second arch, the U on the right, then up the diagonal and along the top bus
+  "M332 262l88-107h110l90 107v293l50 62h70l45-57V265L605 40H42",
 ];
-const LINKS = ["M220 200v-90", "M450 200v-90", "M220 580v80", "M360 580v40h160v40"];
+const NODES: [number, number, string][] = [
+  [45, 600, "#2E2A6E"],
+  [332, 600, "#2E2A6E"],
+  [42, 40, "#2DB8C0"],
+];
+const LINKS = ["M96 200V110", "M349 200v-50h251v-40", "M98 547v93", "M276 547v53h324v40"];
 
 export default function HeroCircuit() {
   return (
     <div className="reveal relative mx-auto aspect-square w-full max-w-[40rem]">
       <svg viewBox="0 0 720 720" className="absolute inset-0 h-full w-full" aria-hidden="true">
         <defs>
-          <linearGradient id="mt-grad" x1="0" y1="170" x2="0" y2="590" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#2BC4C9" />
-            <stop offset="1" stopColor="#3B3A9E" />
+          <linearGradient id="mt-grad" x1="0" y1="20" x2="0" y2="640" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#2DB8C0" />
+            <stop offset=".45" stopColor="#3389A8" />
+            <stop offset="1" stopColor="#2E2A6E" />
           </linearGradient>
         </defs>
 
@@ -42,33 +51,28 @@ export default function HeroCircuit() {
           </g>
         ))}
 
-        {/* the M */}
-        {M_TRACES.map((d, i) => (
-          <path key={d} d={d} pathLength={1} className={`draw ${i ? `d${i}` : ""}`} fill="none" stroke="url(#mt-grad)" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round" />
-        ))}
-        {M_TRACES.map((d, i) => (
-          <path key={`p${d}`} d={d} pathLength={1000} className={`trace-pulse p${i + 1}`} fill="none" stroke="#fff" strokeOpacity=".85" strokeWidth="6" strokeLinecap="round" />
-        ))}
-        <path d="M575 168h60l-30 42z" fill="#2BC4C9" className="pop" style={{ animationDelay: "1.6s" }} />
-
-        {/* nodes */}
-        {[
-          [220, 580, "#3B3A9E"],
-          [360, 580, "#3B3A9E"],
-          [220, 200, "#2BC4C9"],
-        ].map(([x, y, c]) => (
-          <g key={`${x}-${y}`}>
-            <circle cx={x} cy={y} r="14" fill={c as string} className="node-ping" />
-            <circle cx={x} cy={y} r="14" fill={c as string} />
-            <circle cx={x} cy={y} r="5" fill="#fff" />
-          </g>
-        ))}
+        {/* the mark */}
+        <g transform={MARK}>
+          {M_TRACES.map((d, i) => (
+            <path key={d} d={d} pathLength={1} className={`draw ${i ? "d1" : ""}`} fill="none" stroke="url(#mt-grad)" strokeWidth="40" strokeLinejoin="miter" />
+          ))}
+          {M_TRACES.map((d, i) => (
+            <path key={`p${d}`} d={d} pathLength={1000} className={`trace-pulse p${i + 1}`} fill="none" stroke="#fff" strokeOpacity=".8" strokeWidth="10" strokeLinecap="round" />
+          ))}
+          <path d="M722 20h208l-85 155z" fill="#2DB8C0" className="pop" style={{ animationDelay: "1.6s" }} />
+          {NODES.map(([x, y, c]) => (
+            <g key={`${x}-${y}`}>
+              <circle cx={x} cy={y} r="36" fill={c} className="node-ping" />
+              <circle cx={x} cy={y} r="36" fill={c} />
+            </g>
+          ))}
+        </g>
       </svg>
 
       <EventCard className="left-[2%] top-[4%] origin-top-left max-sm:scale-[.74]" delay="1.5s" float="" icon={<MapPin className="h-4 w-4" />} product="Cipher" event="Call report submitted" />
       <EventCard className="right-[2%] top-[4%] origin-top-right max-sm:scale-[.74]" delay="1.8s" float="f2" icon={<MessageCircle className="h-4 w-4" />} product="VaartaBot" event="New WhatsApp lead" />
-      <EventCard className="bottom-[2%] left-[2%] origin-bottom-left max-sm:scale-[.74]" delay="2.1s" float="f3" icon={<Send className="h-4 w-4" />} product="CertifyBusiness CRM" event="Follow-up sent" />
-      <EventCard className="bottom-[2%] right-[2%] origin-bottom-right max-sm:scale-[.74]" delay="2.4s" float="f4" icon={<Briefcase className="h-4 w-4" />} product="LadderStep" event="Interview scheduled" />
+      <EventCard className="bottom-[2%] left-[2%] origin-bottom-left max-sm:scale-[.74]" delay="2.1s" float="f3" icon={<Briefcase className="h-4 w-4" />} product="LadderStep" event="Interview scheduled" />
+      <EventCard className="bottom-[2%] right-[2%] origin-bottom-right max-sm:scale-[.74]" delay="2.4s" float="f4" icon={<Receipt className="h-4 w-4" />} product="Custom billing" event="Invoice paid" />
     </div>
   );
 }
