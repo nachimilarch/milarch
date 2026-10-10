@@ -1,6 +1,6 @@
 import LegalLayout from "@/components/layout/LegalLayout";
 
-export const metadata = { title: "Shipping Policy | Milarch" };
+export const metadata = { title: "Shipping Policy", alternates: { canonical: "/shipping-policy" } };
 
 export default function ShippingPolicyPage() {
   return (

@@ -7,6 +7,8 @@ import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { getProductBySlug, products } from "@/data/products";
 import { RxBadge, CompactProductCard } from "@/components/sections/ProductCard";
 import AddToCart from "./AddToCart";
+import JsonLd from "@/components/JsonLd";
+import { productSchema } from "@/lib/seo";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -16,9 +18,16 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const product = getProductBySlug(params.slug);
   if (!product) return {};
   const name = product.brandName.replace("™", "");
+  const title = `${name}: ${product.tagline}`;
+  const description = `${name} (${product.composition}). ${product.clinicalIndication}. ${product.pack}.`;
+  const url = `/pharma/products/${product.slug}`;
   return {
-    title: `${name}: ${product.tagline}`,
-    description: `${name} (${product.composition}). ${product.clinicalIndication}.`,
+    title,
+    description,
+    keywords: [name, product.category, ...product.tags, "Milarch Pharma"],
+    alternates: { canonical: url },
+    openGraph: { title, description, url, type: "website", images: [{ url: product.image, alt: `${name} pack` }] },
+    twitter: { card: "summary_large_image", title, description, images: [product.image] },
   };
 }
 
@@ -38,6 +47,7 @@ export default function ProductDetail({ params }: { params: { slug: string } }) 
           <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
           All products
         </Link>
+        <JsonLd data={productSchema(product)} />
 
         <div className="mt-8 grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Pack shot */}

@@ -1,6 +1,6 @@
 import LegalLayout from "@/components/layout/LegalLayout";
 
-export const metadata = { title: "Terms & Conditions | Milarch" };
+export const metadata = { title: "Terms & Conditions", alternates: { canonical: "/terms" } };
 
 export default function TermsPage() {
   return (

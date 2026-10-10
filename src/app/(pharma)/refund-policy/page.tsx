@@ -1,6 +1,6 @@
 import LegalLayout from "@/components/layout/LegalLayout";
 
-export const metadata = { title: "Refund & Cancellation Policy | Milarch" };
+export const metadata = { title: "Refund & Cancellation Policy", alternates: { canonical: "/refund-policy" } };
 
 export default function RefundPolicyPage() {
   return (

@@ -1,6 +1,6 @@
 import LegalLayout from "@/components/layout/LegalLayout";
 
-export const metadata = { title: "Privacy Policy | Milarch" };
+export const metadata = { title: "Privacy Policy", alternates: { canonical: "/privacy" } };
 
 export default function PrivacyPage() {
   return (
