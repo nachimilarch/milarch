@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { pharmaSchema } from "@/lib/seo";
 import Hero from "@/components/sections/Hero";
@@ -5,6 +6,8 @@ import Products from "@/components/sections/Products";
 import Doctors from "@/components/sections/Doctors";
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default function Home() {
   return (

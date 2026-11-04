@@ -1,6 +1,9 @@
 import LegalLayout from "@/components/layout/LegalLayout";
 
-export const metadata = { title: "Privacy Policy", alternates: { canonical: "/privacy" } };
+export const metadata = { title: "Privacy Policy",
+  description:
+    "How Milarch Pharma and Milarch Tech collect, use and protect your personal information, the third-party services we use, and your rights.",
+  alternates: { canonical: "/privacy" } };
 
 export default function PrivacyPage() {
   return (

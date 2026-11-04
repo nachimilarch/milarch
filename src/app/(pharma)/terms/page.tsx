@@ -1,6 +1,9 @@
 import LegalLayout from "@/components/layout/LegalLayout";
 
-export const metadata = { title: "Terms & Conditions", alternates: { canonical: "/terms" } };
+export const metadata = { title: "Terms & Conditions",
+  description:
+    "Terms for using milarch.in and ordering Milarch Pharma products online, including prescription requirements, pricing and liability.",
+  alternates: { canonical: "/terms" } };
 
 export default function TermsPage() {
   return (

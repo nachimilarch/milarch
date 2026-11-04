@@ -54,7 +54,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Milarch", url: "https://milarch.in" }],
   creator: "Milarch",
   publisher: "Milarch",
-  alternates: { canonical: "/" },
   openGraph: {
     title: "Milarch Pharma | Women's health, Hyderabad",
     description: "In support of healthy pregnancy. Organised interventions. Decisive outcomes.",

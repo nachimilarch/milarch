@@ -1,6 +1,9 @@
 import LegalLayout from "@/components/layout/LegalLayout";
 
-export const metadata = { title: "Refund & Cancellation Policy", alternates: { canonical: "/refund-policy" } };
+export const metadata = { title: "Refund & Cancellation Policy",
+  description:
+    "How to cancel an order or return damaged or incorrect items, and when refunds are paid for Milarch Pharma orders.",
+  alternates: { canonical: "/refund-policy" } };
 
 export default function RefundPolicyPage() {
   return (
