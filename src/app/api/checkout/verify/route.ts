@@ -71,6 +71,46 @@ export async function POST(req: NextRequest) {
     console.error("Order notification email failed", err);
   }
 
+  // Order confirmation email to the customer, when they gave an email address.
+  try {
+    const resendKey = process.env.RESEND_API_KEY;
+    const to = customer?.email?.trim();
+    if (resendKey && to && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
+      const resend = new Resend(resendKey);
+      await resend.emails.send({
+        from: "Milarch Pharma <orders@milarch.in>",
+        to,
+        replyTo: process.env.ADMIN_NOTIFY_EMAIL || "info@milarch.in",
+        subject: `Your Milarch order ${razorpay_order_id} is confirmed`,
+        text: [
+          `Hi ${customer?.name || "there"},`,
+          "",
+          "Thank you for your order. We have received your payment.",
+          "",
+          `Order ID: ${razorpay_order_id}`,
+          `Payment ID: ${razorpay_payment_id}`,
+          "",
+          "Items:",
+          itemsSummary,
+          `Total paid: ₹${total}`,
+          "",
+          `Delivery address: ${[customer?.address, customer?.city, customer?.state, customer?.pincode].filter(Boolean).join(", ")}`,
+          "",
+          prescription
+            ? "Your order includes prescription items. Our pharmacist will verify your prescription before we ship."
+            : "We will let you know when your order ships.",
+          "",
+          "Questions? Reply to this email or WhatsApp us on +91 70838 20068.",
+          "",
+          "Milarch Pharma",
+          "https://milarch.in",
+        ].join("\n"),
+      });
+    }
+  } catch (err) {
+    console.error("Customer confirmation email failed", err);
+  }
+
   const fullAddress = [customer?.address, customer?.city, customer?.state, customer?.pincode]
     .filter(Boolean)
     .join(", ");
