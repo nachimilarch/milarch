@@ -21,7 +21,7 @@ const TECH = {
 export default function ContactForm({ variant = "pharma" }: { variant?: "pharma" | "tech" }) {
   const ui = variant === "tech" ? TECH : LIGHT;
   const FIELD = ui.field;
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent) {
@@ -31,11 +31,11 @@ export default function ContactForm({ variant = "pharma" }: { variant?: "pharma"
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, source: variant }),
       });
       if (!res.ok) throw new Error("Request failed");
       setStatus("sent");
-      setForm({ name: "", email: "", message: "" });
+      setForm({ name: "", email: "", phone: "", message: "" });
     } catch {
       setStatus("error");
     }
@@ -53,6 +53,10 @@ export default function ContactForm({ variant = "pharma" }: { variant?: "pharma"
           <input type="email" required autoComplete="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={FIELD} placeholder="you@example.com" />
         </label>
       </div>
+      <label className={ui.label}>
+        Phone or WhatsApp (optional)
+        <input type="tel" autoComplete="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={FIELD} placeholder="+91 98765 43210" />
+      </label>
       <label className={ui.label}>
         Message
         <textarea rows={5} required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={`${FIELD} resize-none`} placeholder="How can we help?" />
