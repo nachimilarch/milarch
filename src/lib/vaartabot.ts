@@ -8,7 +8,21 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function attemptSend(to: string, templateName: string, variables: string[]) {
+/**
+ * WhatsApp rejects template variables that contain new lines, tabs or more
+ * than four spaces in a row, so flatten every value before sending.
+ */
+function cleanVariable(v: string) {
+  return String(v ?? "")
+    .replace(/\s*\r?\n\s*/g, " | ")
+    .replace(/\t/g, " ")
+    .replace(/ {2,}/g, " ")
+    .trim()
+    .slice(0, 1000) || "-";
+}
+
+async function attemptSend(to: string, templateName: string, rawVariables: string[]) {
+  const variables = rawVariables.map(cleanVariable);
   const apiKey = process.env.VAARTABOT_API_KEY;
   if (!apiKey || !to) return { ok: true }; // not configured — nothing to retry
 
